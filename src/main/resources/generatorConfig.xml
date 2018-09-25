@@ -6,7 +6,7 @@
 
     <context id="mysqlTables" targetRuntime="MyBatis3">
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/java_mvc?characterencoding=utf-8"
+                        connectionURL="jdbc:mysql://localhost:3306/qrqc?characterEncoding=UTF-8"
                         userId="root"
                         password="123456"/>
 
@@ -37,10 +37,169 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!--数据库 表及对应 entity 名-->
-        <table tableName="tb_system_user" domainObjectName="User"
+        <!--配置表-->
+        <!--<table tableName="qrqc_conf_deal_step" domainObjectName="ConfDealStep"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
+        <table tableName="qrqc_conf_department" domainObjectName="ConfDepartment"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="qrqc_conf_exception_type" domainObjectName="ConfExceptionType"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="qrqc_conf_occurrence_source" domainObjectName="ConfOccurrenceSource"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="qrqc_conf_res_type" domainObjectName="ConfResType"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="qrqc_conf_role" domainObjectName="ConfRole"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="qrqc_conf_step" domainObjectName="ConfStep"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="qrqc_conf_step_back" domainObjectName="ConfStepBack"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="qrqc_conf_step_jump" domainObjectName="ConfStepJump"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="qrqc_conf_upload_data" domainObjectName="ConfUploadData"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+
+        <!--QRQC专员填写-->
+        <!--<table tableName="qrqc_commissioner_fill" domainObjectName="CommissionerFill"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--围堵措施 在制品/成品-->
+        <!--<table tableName="qrqc_containment_finished" domainObjectName="ContainmentFinished"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--围堵措施 零部件-->
+        <!--<table tableName="qrqc_containment_parts" domainObjectName="ContainmentParts"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--当前处理步骤-->
+        <!--<table tableName="qrqc_current_deal_step" domainObjectName="CurrentDealStep"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--部门领导审核-->
+        <!--<table tableName="qrqc_department_audit" domainObjectName="DepartmentAudit"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--qe 措施验证-->
+        <!--<table tableName="qrqc_measure_verification_qe" domainObjectName="MeasureVerificationQE"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--需要更新的资料-->
+        <!--<table tableName="qrqc_need_update_datas" domainObjectName="NeedUpdateData"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--初步原因分析-->
+        <!--<table tableName="qrqc_preliminary_cause_analysis" domainObjectName="PreliminaryCauseAnalysis"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--qe围堵确认-->
+        <!--<table tableName="qrqc_qe_audit" domainObjectName="QEAudit"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--议长审核-->
+       <!-- <table tableName="qrqc_qe_chief_audit" domainObjectName="QEChiefAudit"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--QE确认是否关闭-->
+       <!-- <table tableName="qrqc_qe_is_closed" domainObjectName="QEIsClosed"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="qrqc_record_submit" domainObjectName="RecordSubmit"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--根本原因分析和改善措施-->
+        <!--<table tableName="qrqc_root_cause_analysis" domainObjectName="RootCauseAnalysis"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="qrqc_step_deal_user" domainObjectName="StepDealUser"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--流程总表-->
+        <!--<table tableName="qrqc_total_flow" domainObjectName="TotalFlow"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--上传的文件-->
+       <!-- <table tableName="qrqc_upload_datas" domainObjectName="UploadData"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--上传的图片-->
+        <!--<table tableName="qrqc_upload_images" domainObjectName="UploadImages"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--用户表-->
+        <!--<table tableName="qrqc_user" domainObjectName="User"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+        <!--用户信息表-->
+        <!--<table tableName="qrqc_user_info" domainObjectName="UserInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
     </context>
 </generatorConfiguration>

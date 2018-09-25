@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-                        http://www.springframework.org/schema/context
-                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
-                        http://www.springframework.org/schema/mvc
-                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-                        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+                        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--扫描整个包-->
+    <context:component-scan base-package="com.zkd"  />
 
     <!-- 1.配置数据源 引入配置文件 -->
     <bean id="propertyConfigurer"
@@ -17,7 +15,7 @@
         <property name="location" value="classpath:config/jdbc.properties"/>
     </bean>
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="${jdbc.mysql.driver}"/>
         <property name="url" value="${jdbc.mysql.url}"/>
@@ -25,22 +23,19 @@
         <property name="password" value="${jdbc.mysql.password}"/>
         <!-- 初始化连接大小 -->
         <property name="initialSize" value="${jdbc.initialSize}"/>
-        <!-- 连接池最大数量 -->
-        <property name="maxActive" value="${jdbc.maxActive}"/>
         <!-- 连接池最大空闲 -->
         <property name="maxIdle" value="${jdbc.maxIdle}"/>
         <!-- 连接池最小空闲 -->
         <property name="minIdle" value="${jdbc.minIdle}"/>
-        <!-- 获取连接最大等待时间 -->
-        <property name="maxWait" value="${jdbc.maxWait}"/>
     </bean>
+
 
     <!-- 2.spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
     <!-- mybatis的SqlSession的工厂: SqlSessionFactoryBean dataSource:引用数据源 MyBatis定义数据源,同意加载配置 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <!-- 制定Mybatis的配置 -->
-        <property name="configLocation" value="classpath:config/mybatis-config.xml" />
+        <property name="configLocation" value="classpath:config/mybatis-config.xml"/>
         <!-- 自动扫描mapping.xml文件 -->
         <!-- 指定实体类映射文件，可以指定同时指定某一包以及子包下面的所有配置文件，mapperLocations和configLocation有一个即可，
             当需要为实体类指定别名时，可指定configLocation属性，再在mybatis总配置文件中采用mapper引入实体类映射文件 -->
@@ -61,4 +56,5 @@
 
     <!-- 5.开启注解控制事务-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
 </beans>

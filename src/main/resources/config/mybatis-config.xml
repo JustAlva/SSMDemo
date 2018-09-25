@@ -5,7 +5,39 @@
     <!--<typeAliases>
         <typeAlias alias="User" type="com.zkd.entity.User"/>
     </typeAliases>-->
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="callSettersOnNulls" value="true"/>
+    </settings>
     <mappers>
+        <mapper resource="com/zkd/dao/mapper/CommissionerFillMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/ConfDealStepMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/ConfDepartmentMapper.xml"/>
+        <mapper resource="com/zkd/dao/mapper/ConfExceptionTypeMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/ConfOccurrenceSourceMapper.xml"/>
+        <mapper resource="com/zkd/dao/mapper/ConfResTypeMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/ConfRoleMapper.xml"/>
+        <mapper resource="com/zkd/dao/mapper/ConfStepBackMapper.xml"/>
+        <mapper resource="com/zkd/dao/mapper/ConfStepJumpMapper.xml"/>
+        <mapper resource="com/zkd/dao/mapper/ConfStepMapper.xml"/>
+        <mapper resource="com/zkd/dao/mapper/ConfUploadDataMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/ContainmentFinishedMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/ContainmentPartsMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/CurrentDealStepMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/DepartmentAuditMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/MeasureVerificationQEMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/NeedUpdateDataMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/PreliminaryCauseAnalysisMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/QEAuditMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/QEChiefAuditMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/QEIsClosedMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/RecordSubmitMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/RootCauseAnalysisMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/StepDealUserMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/TotalFlowMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/UploadDataMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/UploadImagesMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/UserInfoMapper.xml" />
         <mapper resource="com/zkd/dao/mapper/UserMapper.xml" />
     </mappers>
 </configuration>

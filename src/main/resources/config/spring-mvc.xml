@@ -10,15 +10,28 @@
                         http://www.springframework.org/schema/mvc
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-    <!-- 注解扫描包 -->
-    <context:component-scan base-package="com.zkd" />
+    <!-- 注解扫描包 只扫描controller包-->
+    <context:component-scan base-package="com.zkd.controller"/>
 
     <!--启用spring的一些annotation -->
     <!-- context:annotation-config 和 mvc:annotation-driven 区别
          https://www.cnblogs.com/dreamroute/p/4493346.html-->
     <context:annotation-config/>
     <!-- 扩充了注解驱动，可以将请求参数绑定到控制器参数 -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=utf-8</value>
+                        <value>text/html;charset=utf-8</value>
+                        <!-- application 可以在任意 form 表单里面 enctype 属性默认找到 -->
+                        <value>application/x-www-form-urlencoded</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
     <!-- 静态资源处理  css js imgs -->
     <!--静态资源映射-->
     <!--本项目把静态资源放在了WEB-INF的statics目录下，资源映射如下-->
@@ -32,11 +45,11 @@
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- 默认编码 -->
-        <property name="defaultEncoding" value="utf-8" />
+        <property name="defaultEncoding" value="utf-8"/>
         <!-- 文件大小最大值 -->
-        <property name="maxUploadSize" value="10485760000" />
+        <property name="maxUploadSize" value="10485760000"/>
         <!-- 内存中的最大值 -->
-        <property name="maxInMemorySize" value="40960" />
+        <property name="maxInMemorySize" value="40960"/>
         <!-- 启用是为了推迟文件解析，以便捕获文件大小异常 -->
         <property name="resolveLazily" value="true"/>
     </bean>
@@ -44,7 +57,9 @@
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
-        <property name="prefix" value="/WEB-INF/views/" />
-        <property name="suffix" value=".jsp" />
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
     </bean>
+
+
 </beans>
