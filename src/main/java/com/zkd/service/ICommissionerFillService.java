@@ -8,6 +8,6 @@ public interface ICommissionerFillService {
 
     String getData() ;
 
-    String addNew(String data,List<MultipartFile> files,String basePath);
+    String addNew(String data,List<MultipartFile> files,String basePath,String urlPath);
 
 }

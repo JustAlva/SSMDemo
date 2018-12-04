@@ -1,5 +1,6 @@
 package com.zkd.utils;
 
+import com.alibaba.druid.support.logging.Log;
 import com.google.gson.Gson;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import com.zkd.common.constant.Constant;
@@ -9,6 +10,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import java.lang.reflect.Type;
 import java.security.Key;
+import java.util.logging.Logger;
 
 /**
  * describe: 3des加密工具类
@@ -54,7 +56,9 @@ public class EncryptUtils<T> {
      * @return 解密后字符串
      */
     public static String decryptStr(String data) {
-        return decrypt(getKeyByte(Constant.ENCRYPT_APP_KEY), Base64.decode(data));
+        System.out.println("请求string："+data);
+        String requestData = data.replace(" ", "+");
+        return decrypt(getKeyByte(Constant.ENCRYPT_APP_KEY), Base64.decode(requestData));
     }
 
     private static String encrypt(byte[] key, byte[] data) {

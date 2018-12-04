@@ -34,4 +34,12 @@ public class LoginController {
         return "test";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "rootLogin", method = RequestMethod.POST)
+    public String rootLogin(@RequestParam("data")String data  ) {
+        return loginService.rootLogin(data);
+    }
+
+
+
 }

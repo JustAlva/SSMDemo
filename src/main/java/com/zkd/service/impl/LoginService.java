@@ -27,16 +27,14 @@ public class LoginService implements ILoginService {
     public String checkUserLogin(String getStr) throws Exception {
         int code = -1;
         String msg;
-        //EncryptUtils encryptUtils = new EncryptUtils();
         try {
-            String requestStr = getStr.replace(" ", "+");
-            String getRequest = EncryptUtils.decryptStr(requestStr);
+            String getRequest = EncryptUtils.decryptStr(getStr);
             RequestLoginBean loginBean = new Gson().fromJson(getRequest, RequestLoginBean.class);
             List<User> list = userDao.selectById(loginBean.getUserId());
             if (list.size()<=0) {
                 code = MsgConstant.CODE_FAIL;
                 msg = MsgConstant.LOGIN_FAIL_NO_SUCH_USER;
-                return new EncryptUtils<>().encryptObj( new ReturnDataBean<>(code, "", msg));
+                return new EncryptUtils<>().encryptObj( new ReturnDataBean<>(code, null, msg));
             } else {
                 User user = list.get(0);
                 if (user.getUserPsd().equals(loginBean.getUserPsd())) {
@@ -48,7 +46,7 @@ public class LoginService implements ILoginService {
                 } else {
                     code = MsgConstant.CODE_FAIL;
                     msg = MsgConstant.LOGIN_FAIL_PSD_ERROR;
-                    return new EncryptUtils<>().encryptObj( new ReturnDataBean<>(code, "", msg));
+                    return new EncryptUtils<>().encryptObj( new ReturnDataBean<>(code, null, msg));
                 }
             }
         } catch (Exception e) {
@@ -58,5 +56,19 @@ public class LoginService implements ILoginService {
         }
 
 
+    }
+
+    @Override
+    public String rootLogin(String data) {
+        RequestLoginBean requestData = new EncryptUtils<RequestLoginBean>().decryptObj(data, RequestLoginBean.class);
+
+        List<User> list = userDao.selectById(requestData.getUserId());
+        if (list.size()<=0) {
+            return new EncryptUtils<>().encryptObj( new ReturnDataBean<>(MsgConstant.CODE_FAIL, null, MsgConstant.LOGIN_FAIL_NO_SUCH_USER));
+        } else {
+            List<UserDataBean> createUserList = userInfoDao.selectUserInfoById(requestData.getUserId());
+            return new EncryptUtils<>().encryptObj( new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, createUserList.get(0), MsgConstant.LOGIN_SUCCESS));
+
+        }
     }
 }

@@ -96,35 +96,35 @@
                selectByExampleQueryId="false">
         </table>-->
         <!--围堵措施 在制品/成品-->
-        <!--<table tableName="qrqc_containment_finished" domainObjectName="ContainmentFinished"
+        <table tableName="qrqc_containment_finished" domainObjectName="ContainmentFinished"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-        </table>-->
+        </table>
         <!--围堵措施 零部件-->
-        <!--<table tableName="qrqc_containment_parts" domainObjectName="ContainmentParts"
+        <table tableName="qrqc_containment_parts" domainObjectName="ContainmentParts"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-        </table>-->
+        </table>
         <!--当前处理步骤-->
-        <!--<table tableName="qrqc_current_deal_step" domainObjectName="CurrentDealStep"
+        <table tableName="qrqc_current_deal_step" domainObjectName="CurrentDealStep"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-        </table>-->
+        </table>
         <!--部门领导审核-->
-        <!--<table tableName="qrqc_department_audit" domainObjectName="DepartmentAudit"
+        <table tableName="qrqc_department_audit" domainObjectName="DepartmentAudit"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-        </table>-->
+        </table>
         <!--qe 措施验证-->
-        <!--<table tableName="qrqc_measure_verification_qe" domainObjectName="MeasureVerificationQE"
+        <table tableName="qrqc_measure_verification_qe" domainObjectName="MeasureVerificationQE"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-        </table>-->
+        </table>
         <!--需要更新的资料-->
         <!--<table tableName="qrqc_need_update_datas" domainObjectName="NeedUpdateData"
                enableCountByExample="false" enableUpdateByExample="false"
@@ -132,17 +132,17 @@
                selectByExampleQueryId="false">
         </table>-->
         <!--初步原因分析-->
-        <!--<table tableName="qrqc_preliminary_cause_analysis" domainObjectName="PreliminaryCauseAnalysis"
+        <table tableName="qrqc_preliminary_cause_analysis" domainObjectName="PreliminaryCauseAnalysis"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-        </table>-->
-        <!--qe围堵确认-->
-        <!--<table tableName="qrqc_qe_audit" domainObjectName="QEAudit"
+        </table>
+        <!--qe方案审核确认-->
+        <table tableName="qrqc_qe_audit" domainObjectName="QEAudit"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-        </table>-->
+        </table>
         <!--议长审核-->
        <!-- <table tableName="qrqc_qe_chief_audit" domainObjectName="QEChiefAudit"
                enableCountByExample="false" enableUpdateByExample="false"
@@ -150,22 +150,23 @@
                selectByExampleQueryId="false">
         </table>-->
         <!--QE确认是否关闭-->
-       <!-- <table tableName="qrqc_qe_is_closed" domainObjectName="QEIsClosed"
+       <table tableName="qrqc_qe_is_closed" domainObjectName="QEIsClosed"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-        </table>-->
+        </table>
         <!--<table tableName="qrqc_record_submit" domainObjectName="RecordSubmit"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>-->
         <!--根本原因分析和改善措施-->
-        <!--<table tableName="qrqc_root_cause_analysis" domainObjectName="RootCauseAnalysis"
+        <table tableName="qrqc_root_cause_analysis" domainObjectName="RootCauseAnalysis"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-        </table>-->
+        </table>
+        <!--处理人员表-->
         <!--<table tableName="qrqc_step_deal_user" domainObjectName="StepDealUser"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"

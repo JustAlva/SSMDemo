@@ -157,24 +157,27 @@ public class MyDateUtils {
 
     }
 
+    public static Date getCurrentDate() {
+        return  getCalendar().getTime();
+    }
     public static String getCurrentDateString(SimpleDateFormat format) {
         Date date = getCalendar().getTime();
         return format.format(date);
     }
 
     public static String getYearMonthDayString(){
-        return getCurrentYear() + getCurrentMonth() + getCurrentDay() + "";
+        return getCurrentYear() + getCurrentMonth() + getCurrentDay() ;
     }
 
-    public static   int getCurrentYear(){
-        return  getCalendar().get(Calendar.YEAR) ;
+    public static   String getCurrentYear(){
+        return  getCalendar().get(Calendar.YEAR)+"" ;
     }
 
-    public static int getCurrentMonth(){
-        return getCalendar().get(Calendar.MONTH)+1;
+    public static String getCurrentMonth(){
+        return (getCalendar().get(Calendar.MONTH)+1)+"";
     }
 
-    public static int getCurrentDay(){
-        return getCalendar().get(Calendar.DAY_OF_MONTH);
+    public static String getCurrentDay(){
+        return getCalendar().get(Calendar.DAY_OF_MONTH)+"";
     }
 }
