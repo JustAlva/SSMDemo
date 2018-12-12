@@ -20,7 +20,7 @@
         <!-- spring版本号 -->
         <spring.version>5.0.7.RELEASE</spring.version>
         <!-- mysql -->
-        <mysql-connector>5.1.30</mysql-connector>
+        <mysql-connector>8.0.13</mysql-connector>
         <!-- mybatis版本号 -->
         <mybatis.version>3.4.6</mybatis.version>
         <!-- mybatis-generator-core 版本号-->
@@ -137,6 +137,30 @@
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
         </dependency>
+
+        <!--region resin 需要的jar-->
+         <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator-annotation-processor -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator-annotation-processor</artifactId>
+            <version>6.0.13.Final</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+       <!-- <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.13.Final</version>
+        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.jboss.logging/jboss-logging -->
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.3.2.Final</version>
+        </dependency>
+        <!--endregion-->
+
 
         <!-- 导入Mysql数据库链接jar包 -->
         <dependency>

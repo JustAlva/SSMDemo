@@ -7,6 +7,7 @@ import com.zkd.common.bean.back.ReturnQEChiefAuditLoadDataBean;
 import com.zkd.common.bean.other.StepJumpBean;
 import com.zkd.common.bean.request.RequestLoadBaseDataBean;
 import com.zkd.common.bean.request.RequestQeChiefAuditSubmitDataBean;
+import com.zkd.common.bean.request.show.RequestShowLoadBaseBean;
 import com.zkd.common.constant.MsgConstant;
 import com.zkd.common.constant.StepConstant;
 import com.zkd.dao.map.*;
@@ -131,5 +132,12 @@ public class QEChiefAuditService implements IQEChiefAuditService {
             returnData = new ReturnDataBean<>(MsgConstant.CODE_FAIL, "", MsgConstant.COMMON_SAVE_FAIL);
         }
         return new EncryptUtils<>().encryptObj(returnData);
+    }
+
+    @Override
+    public String getDetail(String data) {
+        RequestShowLoadBaseBean requestData = new EncryptUtils<RequestShowLoadBaseBean>().decryptObj(data, RequestShowLoadBaseBean.class);
+        QEChiefAudit detail = qeChiefAuditDao.selectByPrimaryKey(requestData.getTableId());
+        return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, detail, MsgConstant.MSG_SUCCESS));
     }
 }

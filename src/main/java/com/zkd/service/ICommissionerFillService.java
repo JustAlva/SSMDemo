@@ -10,4 +10,5 @@ public interface ICommissionerFillService {
 
     String addNew(String data,List<MultipartFile> files,String basePath,String urlPath);
 
+    String getDetail(String data);
 }

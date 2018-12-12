@@ -6,6 +6,7 @@ import com.zkd.common.bean.back.ReturnDataBean;
 import com.zkd.common.bean.other.StepJumpBean;
 import com.zkd.common.bean.request.RequestContainmentPartsLoadDataBean;
 import com.zkd.common.bean.request.RequestContainmentPartsSubmitDataBean;
+import com.zkd.common.bean.request.show.RequestShowLoadBaseBean;
 import com.zkd.common.constant.MsgConstant;
 import com.zkd.common.constant.StepConstant;
 import com.zkd.dao.map.*;
@@ -141,5 +142,10 @@ public class ContainmentPartsService implements IContainmentPartsService {
         return new EncryptUtils<>().encryptObj(returnData);
     }
 
-
+    @Override
+    public String getDetail(String data) {
+        RequestShowLoadBaseBean requestData = new EncryptUtils<RequestShowLoadBaseBean>().decryptObj(data, RequestShowLoadBaseBean.class);
+        ContainmentParts detail = containmentPartsDao.selectByPrimaryKey(requestData.getTableId());
+        return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, detail, MsgConstant.MSG_SUCCESS));
+    }
 }

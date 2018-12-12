@@ -1,6 +1,9 @@
 package com.zkd.controller;
 
+import com.zkd.common.bean.back.ReturnDataBean;
+import com.zkd.common.constant.MsgConstant;
 import com.zkd.service.IProcessService;
+import com.zkd.utils.EncryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +24,18 @@ public class ProcessController {
 
     @ResponseBody
     @RequestMapping(value = "/all",method = RequestMethod.GET)
-    public String getAllProcess(HttpServletRequest request, Model model) throws Exception {
+    public String getAllProcess(HttpServletRequest request, Model model)  {
         return processService.getAllProcess();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/totalDetail",method = RequestMethod.POST)
+    public String getProcessAllDetail( @RequestParam("data") String data)  {
+        try {
+            return processService.getProcessAllDetail(data);
+        } catch (Exception e) {
+            return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_ERROR, e.toString(), MsgConstant.MSG_ERROR));
+        }
     }
 
     @ResponseBody

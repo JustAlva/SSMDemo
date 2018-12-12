@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.zkd.common.bean.back.ReturnDataBean;
 import com.zkd.common.bean.other.StepJumpBean;
 import com.zkd.common.bean.request.RequestContainmentFinishSubmitDataBean;
+import com.zkd.common.bean.request.show.RequestShowLoadBaseBean;
 import com.zkd.common.constant.MsgConstant;
 import com.zkd.common.constant.StepConstant;
 import com.zkd.dao.map.*;
@@ -103,5 +104,12 @@ public class ContainmentFinishService implements IContainmentFinishService {
             returnData = new ReturnDataBean<>(MsgConstant.CODE_FAIL, "", MsgConstant.COMMON_SAVE_FAIL);
         }
         return new EncryptUtils<>().encryptObj(returnData);
+    }
+
+    @Override
+    public String getDetail(String data) {
+        RequestShowLoadBaseBean requestData = new EncryptUtils<RequestShowLoadBaseBean>().decryptObj(data, RequestShowLoadBaseBean.class);
+        ContainmentFinished detail = containmentFinishedDao.selectByPrimaryKey(requestData.getTableId());
+        return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, detail, MsgConstant.MSG_SUCCESS));
     }
 }

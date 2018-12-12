@@ -1,7 +1,9 @@
 package com.zkd.service;
 
 public interface IProcessService {
-    String getAllProcess() throws Exception;
+    String getAllProcess()  ;
+
+    String getProcessAllDetail(String data);
 
     String getDealProcess(String data);
 

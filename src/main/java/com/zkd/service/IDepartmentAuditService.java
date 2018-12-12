@@ -6,4 +6,5 @@ public interface IDepartmentAuditService {
 
     String submit(String data);
 
+    String getDetail(String data);
 }

@@ -33,6 +33,14 @@ public class ContainmentPartsController {
             return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_ERROR, e.toString(),MsgConstant.COMMON_SAVE_FAIL ));
         }
     }
-
+    @ResponseBody
+    @RequestMapping(value = "/detail", method = RequestMethod.POST)
+    public String getDetail(@RequestParam("data") String data) {
+        try {
+            return  containmentPartsService.getDetail(data);
+        } catch (Exception e) {
+            return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_FAIL, e.getMessage(), MsgConstant.MSG_ERROR));
+        }
+    }
 }
 

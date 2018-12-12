@@ -7,6 +7,7 @@ import com.zkd.common.bean.other.SaveFileDataBean;
 import com.zkd.common.bean.other.StepJumpBean;
 import com.zkd.common.bean.request.RequestIsCloseSureSubmitDataBean;
 import com.zkd.common.bean.request.RequestLoadBaseDataBean;
+import com.zkd.common.bean.request.show.RequestShowLoadBaseBean;
 import com.zkd.common.constant.MsgConstant;
 import com.zkd.common.constant.StepConstant;
 import com.zkd.dao.map.*;
@@ -80,8 +81,8 @@ public class IsCloseSureService implements IIsCloseSureService {
 
                 StepJumpBean nextStep = new StepJumpBean(StepConstant.QRQC_QE_SURE_CLOSED_CODE, StepConstant.QRQC_QE_SURE_CLOSED_NAME, requestData.getUserCode(), requestData.getFlowID(), requestData.isAdopt());
                 if (requestData.isAdopt()) {
-                    UserInfo leaderInfo = userInfoDao.selectLeader(requestData.getUserCode());
-                    nextStep.setEndStep(StepConstant.QRQC_QE_CHIEF_AUDIT_CODE, StepConstant.QRQC_QE_CHIEF_AUDIT_NAME, leaderInfo.getUserNo());
+                    List<UserInfo> leaderInfo = userInfoDao.selectLeader(requestData.getUserCode());
+                    nextStep.setEndStep(StepConstant.QRQC_QE_CHIEF_AUDIT_CODE, StepConstant.QRQC_QE_CHIEF_AUDIT_NAME, leaderInfo.get(0).getUserNo());
                 } else {
                     List<CommissionerFill> commissionerList = commissionerFillDao.selectByFlowId(requestData.getFlowID());
 
@@ -162,4 +163,12 @@ public class IsCloseSureService implements IIsCloseSureService {
         }
         return new EncryptUtils<>().encryptObj(returnData);
     }
+
+    @Override
+    public String getDetail(String data) {
+        RequestShowLoadBaseBean requestData = new EncryptUtils<RequestShowLoadBaseBean>().decryptObj(data, RequestShowLoadBaseBean.class);
+        QEIsClosed detail = qeIsClosedDao.selectByPrimaryKey(requestData.getTableId());
+        return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, detail, MsgConstant.MSG_SUCCESS));
+    }
+
 }

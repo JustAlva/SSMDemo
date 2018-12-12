@@ -6,13 +6,11 @@ import com.zkd.service.ICommissionerFillService;
 import com.zkd.utils.EncryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.POST;
 import java.util.List;
 
 @Controller
@@ -23,7 +21,7 @@ public class CommissionerFillController {
 
     @ResponseBody
     @RequestMapping(value = "/load", method = RequestMethod.GET)
-    public String getData()  {
+    public String getData() {
         return commissionerFillService.getData();
     }
 
@@ -36,6 +34,16 @@ public class CommissionerFillController {
             return commissionerFillService.addNew(data, files, basePath, urlPath);
         } catch (Exception e) {
             return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_FAIL, e.getMessage(), MsgConstant.COMMON_SAVE_FAIL));
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/detail", method = RequestMethod.POST)
+    public String getDetail(@RequestParam("data") String data) {
+        try {
+            return  commissionerFillService.getDetail(data);
+        } catch (Exception e) {
+            return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_FAIL, e.getMessage(), MsgConstant.MSG_ERROR));
         }
     }
 }
