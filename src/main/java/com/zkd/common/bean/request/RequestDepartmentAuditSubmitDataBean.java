@@ -1,13 +1,13 @@
 package com.zkd.common.bean.request;
 
 public class RequestDepartmentAuditSubmitDataBean {
-    private int currentStepId ;//QRQC_CURRENT_DEAL_STEP 表的id
-    private int stepTableId ;//信息存入表的id
+    private String currentStepId ;//QRQC_CURRENT_DEAL_STEP 表的id
+    private String stepTableId ;//信息存入表的id
     private String flowID ;//QRQC流程 流水号
     private String userCode ;//用户id
     private boolean isAdopt  ;
 
-    public RequestDepartmentAuditSubmitDataBean(int currentStepId, int stepTableId, String flowID, String userCode, boolean isAdopt) {
+    public RequestDepartmentAuditSubmitDataBean(String currentStepId, String stepTableId, String flowID, String userCode, boolean isAdopt) {
         this.currentStepId = currentStepId;
         this.stepTableId = stepTableId;
         this.flowID = flowID;
@@ -15,19 +15,19 @@ public class RequestDepartmentAuditSubmitDataBean {
         this.isAdopt = isAdopt;
     }
 
-    public int getCurrentStepId() {
+    public String getCurrentStepId() {
         return currentStepId;
     }
 
-    public void setCurrentStepId(int currentStepId) {
+    public void setCurrentStepId(String currentStepId) {
         this.currentStepId = currentStepId;
     }
 
-    public int getStepTableId() {
+    public String getStepTableId() {
         return stepTableId;
     }
 
-    public void setStepTableId(int stepTableId) {
+    public void setStepTableId(String stepTableId) {
         this.stepTableId = stepTableId;
     }
 

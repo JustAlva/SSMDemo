@@ -1,10 +1,10 @@
 package com.zkd.common.bean.request;
 
 public class RequestSelectStaffDepartmentBean {
-    private int departmentId;
+    private String departmentId;
     private String role;
 
-    public RequestSelectStaffDepartmentBean(int departmentId, String role) {
+    public RequestSelectStaffDepartmentBean(String departmentId, String role) {
         this.departmentId = departmentId;
         this.role = role;
     }
@@ -17,11 +17,11 @@ public class RequestSelectStaffDepartmentBean {
         this.role = role;
     }
 
-    public int getDepartmentId() {
+    public String getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
     }
 }

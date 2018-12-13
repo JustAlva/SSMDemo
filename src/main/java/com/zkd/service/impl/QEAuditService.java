@@ -16,6 +16,7 @@ import com.zkd.service.IQEAuditService;
 import com.zkd.utils.EncryptUtils;
 import com.zkd.utils.MyDateUtils;
 import com.zkd.utils.ProcessDealUtils;
+import com.zkd.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -53,11 +54,11 @@ public class QEAuditService implements IQEAuditService {
         List<ReturnQEAuditLoadDataBean> dataList = new ArrayList<>();
         List<CurrentDealStep> listDepartmentAudit = currentDealStepDao.selectDepartmentAuditList(requestData.getFlowID());
         for (CurrentDealStep step :listDepartmentAudit) {
-            UserDataBean leader = userInfoDao.selectByUserNo(step.getCurrentDealUser());
-            UserDataBean dealUser = userInfoDao.selectByUserNo(step.getCreateUser());
+            List<UserDataBean> leader = userInfoDao.selectByUserNo(step.getCurrentDealUser());
+            List<UserDataBean> dealUser = userInfoDao.selectByUserNo(step.getCreateUser());
             RootCauseAnalysisWithBLOBs rootCause= rootCauseAnalysisDao.selectByPrimaryKey(step.getCreateStepTableId());
 
-            ReturnQEAuditLoadDataBean totalData = new ReturnQEAuditLoadDataBean(leader, dealUser, step, rootCause);
+            ReturnQEAuditLoadDataBean totalData = new ReturnQEAuditLoadDataBean(leader.get(0), dealUser.get(0), step, rootCause);
             dataList.add(totalData);
         }
 
@@ -70,7 +71,7 @@ public class QEAuditService implements IQEAuditService {
         ReturnDataBean returnData;
         RequestQeAuditSubmitDataBean requestData = new EncryptUtils<RequestQeAuditSubmitDataBean>().decryptObj(data, RequestQeAuditSubmitDataBean.class);
         if (requestData != null) {
-            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(requestData.getCurrentStepId());
+            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(StringUtils.parseString2Int(requestData.getCurrentStepId()));
             if (currentDealStep.getFlag() == 0) {
                 Date now = MyDateUtils.getCurrentDate();
                 ProcessDealUtils processDealUtils = new ProcessDealUtils();
@@ -86,11 +87,11 @@ public class QEAuditService implements IQEAuditService {
                 }
 
                 //1.保存提交的数据
-                QEAudit qeAudit = new QEAudit(requestData.getStepTableId(), 5, requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getFlowID(), requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.isExport() ? 1 : 0, requestData.getUserCode(), now);
+                QEAudit qeAudit = new QEAudit(StringUtils.parseString2Int(requestData.getStepTableId()), 5, requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getFlowID(), requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.isExport() ? 1 : 0, requestData.getUserCode(), now);
                 qeAuditDao.updateByPrimaryKeySelective(qeAudit);
 
                 //2.将当前节点处理表中该步骤结束
-                processDealUtils.endCurrentStep(currentDealStepDao, requestData.getCurrentStepId(), requestData.isAdopt(), requestData.getUserCode(), now);
+                processDealUtils.endCurrentStep(currentDealStepDao, StringUtils.parseString2Int(requestData.getCurrentStepId()), requestData.isAdopt(), requestData.getUserCode(), now);
 
                 boolean tag = true;
                 //3.在下个节点表中插入一条记录，并返回id
@@ -107,7 +108,7 @@ public class QEAuditService implements IQEAuditService {
                             qeIsClosedDao.insertBackId(qeIsClosed);
                             nextStep.setEndTableId(qeIsClosed.getId());
                             //4.5.
-                            processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now, requestData.getCurrentStepId(), requestData.getStepTableId());
+                            processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now, StringUtils.parseString2Int(requestData.getCurrentStepId()), StringUtils.parseString2Int(requestData.getStepTableId()));
                         }
                         break;
                     case StepConstant.QRQC_CAUSE_ANALYSIS_ROOT_CODE:
@@ -139,7 +140,7 @@ public class QEAuditService implements IQEAuditService {
                             currentDealStepDao.updateByPrimaryKeySelective(deaprtStep );
 
                             //4.5.
-                            processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now, requestData.getCurrentStepId(), requestData.getStepTableId());
+                            processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now, StringUtils.parseString2Int(requestData.getCurrentStepId()), StringUtils.parseString2Int(requestData.getStepTableId()));
                         }
                         break;
                 }

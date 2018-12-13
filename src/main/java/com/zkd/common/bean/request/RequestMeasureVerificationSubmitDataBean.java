@@ -1,8 +1,8 @@
 package com.zkd.common.bean.request;
 
 public class RequestMeasureVerificationSubmitDataBean {
-    private int currentStepId ;//QRQC_CURRENT_DEAL_STEP 表的id
-    private int stepTableId ;//信息存入表的id
+    private String currentStepId ;//QRQC_CURRENT_DEAL_STEP 表的id
+    private String stepTableId ;//信息存入表的id
     private String flowID ;//QRQC流程 流水号
     private String userCode ;//用户id
     private String measureEffect ;//措施效果
@@ -11,7 +11,7 @@ public class RequestMeasureVerificationSubmitDataBean {
     private boolean isAdopt ;//通过/退回，默认通过
     private String selectBackStep ;//回退步骤
 
-    public RequestMeasureVerificationSubmitDataBean(int currentStepId, int stepTableId, String flowID, String userCode, String measureEffect, String repeatNumber, boolean isWrongCheck, boolean isAdopt, String selectBackStep) {
+    public RequestMeasureVerificationSubmitDataBean(String currentStepId, String stepTableId, String flowID, String userCode, String measureEffect, String repeatNumber, boolean isWrongCheck, boolean isAdopt, String selectBackStep) {
         this.currentStepId = currentStepId;
         this.stepTableId = stepTableId;
         this.flowID = flowID;
@@ -23,19 +23,19 @@ public class RequestMeasureVerificationSubmitDataBean {
         this.selectBackStep = selectBackStep;
     }
 
-    public int getCurrentStepId() {
+    public String getCurrentStepId() {
         return currentStepId;
     }
 
-    public void setCurrentStepId(int currentStepId) {
+    public void setCurrentStepId(String currentStepId) {
         this.currentStepId = currentStepId;
     }
 
-    public int getStepTableId() {
+    public String getStepTableId() {
         return stepTableId;
     }
 
-    public void setStepTableId(int stepTableId) {
+    public void setStepTableId(String stepTableId) {
         this.stepTableId = stepTableId;
     }
 

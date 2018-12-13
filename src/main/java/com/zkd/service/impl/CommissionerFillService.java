@@ -162,6 +162,7 @@ public class CommissionerFillService implements ICommissionerFillService {
     @Override
     public String getDetail(String data) {
         RequestShowLoadBaseBean requestData = new EncryptUtils<RequestShowLoadBaseBean>().decryptObj(data, RequestShowLoadBaseBean.class);
+
         CommissionerFill commissionerFill = commissionerFillDao.selectByPrimaryKey(requestData.getTableId());
         return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, commissionerFill, MsgConstant.MSG_SUCCESS));
     }

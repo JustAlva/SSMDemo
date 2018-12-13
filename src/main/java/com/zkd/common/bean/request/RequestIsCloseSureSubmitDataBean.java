@@ -3,15 +3,15 @@ package com.zkd.common.bean.request;
 import java.util.Date;
 
 public class RequestIsCloseSureSubmitDataBean {
-    private int currentStepId  ;
-    private int stepTableId  ;
+    private String currentStepId  ;
+    private String stepTableId  ;
     private String flowID  ;
     private String userCode  ;
     private Date changeDate  ;
     private boolean isAdopt  ;
     private String selectBackStep  ;
 
-    public RequestIsCloseSureSubmitDataBean(int currentStepId, int stepTableId, String flowID, String userCode, Date changeDate, boolean isAdopt, String selectBackStep) {
+    public RequestIsCloseSureSubmitDataBean(String currentStepId, String stepTableId, String flowID, String userCode, Date changeDate, boolean isAdopt, String selectBackStep) {
         this.currentStepId = currentStepId;
         this.stepTableId = stepTableId;
         this.flowID = flowID;
@@ -21,19 +21,19 @@ public class RequestIsCloseSureSubmitDataBean {
         this.selectBackStep = selectBackStep;
     }
 
-    public int getCurrentStepId() {
+    public String getCurrentStepId() {
         return currentStepId;
     }
 
-    public void setCurrentStepId(int currentStepId) {
+    public void setCurrentStepId(String currentStepId) {
         this.currentStepId = currentStepId;
     }
 
-    public int getStepTableId() {
+    public String getStepTableId() {
         return stepTableId;
     }
 
-    public void setStepTableId(int stepTableId) {
+    public void setStepTableId(String stepTableId) {
         this.stepTableId = stepTableId;
     }
 

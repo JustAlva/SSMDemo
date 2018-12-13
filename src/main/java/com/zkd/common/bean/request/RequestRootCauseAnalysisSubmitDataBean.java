@@ -5,8 +5,8 @@ import java.util.List;
 
 public class RequestRootCauseAnalysisSubmitDataBean {
 
-    private int currentStepId ;//QRQC_CURRENT_DEAL_STEP 表的id
-    private int stepTableId ;//信息存入表的id
+    private String currentStepId ;//QRQC_CURRENT_DEAL_STEP 表的id
+    private String stepTableId ;//信息存入表的id
     private String flowID ;//QRQC流程 流水号
     private String userCode ;//用户id
     private String generativeCause ;//发生因
@@ -22,7 +22,7 @@ public class RequestRootCauseAnalysisSubmitDataBean {
     private List<String> updateDatasList  ;//需要更新的资料
     private boolean isAdopt;//通过/退回
 
-    public RequestRootCauseAnalysisSubmitDataBean(int currentStepId, int stepTableId, String flowID, String userCode, String generativeCause, String generativeRes, String outFlowCause, String outFlowRes, String improvement, String improvementRes, Date planFinishDate, String preventiveMeasure, String preventiveRes, Date preventiveFinishDate, List<String> updateDatasList, boolean isAdopt) {
+    public RequestRootCauseAnalysisSubmitDataBean(String currentStepId, String stepTableId, String flowID, String userCode, String generativeCause, String generativeRes, String outFlowCause, String outFlowRes, String improvement, String improvementRes, Date planFinishDate, String preventiveMeasure, String preventiveRes, Date preventiveFinishDate, List<String> updateDatasList, boolean isAdopt) {
         this.currentStepId = currentStepId;
         this.stepTableId = stepTableId;
         this.flowID = flowID;
@@ -41,19 +41,19 @@ public class RequestRootCauseAnalysisSubmitDataBean {
         this.isAdopt = isAdopt;
     }
 
-    public int getCurrentStepId() {
+    public String getCurrentStepId() {
         return currentStepId;
     }
 
-    public void setCurrentStepId(int currentStepId) {
+    public void setCurrentStepId(String currentStepId) {
         this.currentStepId = currentStepId;
     }
 
-    public int getStepTableId() {
+    public String getStepTableId() {
         return stepTableId;
     }
 
-    public void setStepTableId(int stepTableId) {
+    public void setStepTableId(String stepTableId) {
         this.stepTableId = stepTableId;
     }
 

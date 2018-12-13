@@ -1,21 +1,21 @@
 package com.zkd.common.bean.request;
 
 public class RequestContainmentPartsSubmitDataBean {
-    private int currentStepId ;//QRQC_CURRENT_DEAL_STEP 表的id
-    private int stepTableId;//信息存入表的id
-    private String flowID ;//QRQC流程 流水号
+    private String currentStepId ;//QRQC_CURRENT_DEAL_STEP 表的id
+    private String stepTableId;//信息存入表的id
     private String userCode ;//用户id
-    private int inventory ;//库存
+    private String flowID ;//QRQC流程 流水号
+    private String inventory ;//库存
     private String disposeMeasure ;//处理措施
     private String dealResult ;//处理结果
     private boolean isSupplement = false;//是否补料
     private String supplementDate ;//补料时间
-    private int unhealthyNumber ;//不良数量
-    private double unhealthyRate ;//不良比率
+    private String unhealthyNumber ;//不良数量
+    private String unhealthyRate ;//不良比率
     private boolean isAdopt = true;//确认还是退回，默认确认：true， 退回：false
     private String exceptionType  ;//异常类型 ，当异常类型为外观和不良率小于5％，直接转QE确认是否关闭
 
-    public RequestContainmentPartsSubmitDataBean(int currentStepId, int stepTableId, String flowID, String userCode, int inventory, String disposeMeasure, String dealResult, boolean isSupplement, String supplementDate, int unhealthyNumber, double unhealthyRate, boolean isAdopt, String exceptionType) {
+    public RequestContainmentPartsSubmitDataBean(String currentStepId, String stepTableId, String flowID, String userCode, String inventory, String disposeMeasure, String dealResult, boolean isSupplement, String supplementDate, String unhealthyNumber, String unhealthyRate, boolean isAdopt, String exceptionType) {
         this.currentStepId = currentStepId;
         this.stepTableId = stepTableId;
         this.flowID = flowID;
@@ -31,19 +31,19 @@ public class RequestContainmentPartsSubmitDataBean {
         this.exceptionType = exceptionType;
     }
 
-    public int getCurrentStepId() {
+    public String getCurrentStepId() {
         return currentStepId;
     }
 
-    public void setCurrentStepId(int currentStepId) {
+    public void setCurrentStepId(String currentStepId) {
         this.currentStepId = currentStepId;
     }
 
-    public int getStepTableId() {
+    public String getStepTableId() {
         return stepTableId;
     }
 
-    public void setStepTableId(int stepTableId) {
+    public void setStepTableId(String stepTableId) {
         this.stepTableId = stepTableId;
     }
 
@@ -63,11 +63,11 @@ public class RequestContainmentPartsSubmitDataBean {
         this.userCode = userCode;
     }
 
-    public int getInventory() {
+    public String getInventory() {
         return inventory;
     }
 
-    public void setInventory(int inventory) {
+    public void setInventory(String inventory) {
         this.inventory = inventory;
     }
 
@@ -103,19 +103,19 @@ public class RequestContainmentPartsSubmitDataBean {
         this.supplementDate = supplementDate;
     }
 
-    public int getUnhealthyNumber() {
+    public String getUnhealthyNumber() {
         return unhealthyNumber;
     }
 
-    public void setUnhealthyNumber(int unhealthyNumber) {
+    public void setUnhealthyNumber(String unhealthyNumber) {
         this.unhealthyNumber = unhealthyNumber;
     }
 
-    public double getUnhealthyRate() {
+    public String getUnhealthyRate() {
         return unhealthyRate;
     }
 
-    public void setUnhealthyRate(double unhealthyRate) {
+    public void setUnhealthyRate(String unhealthyRate) {
         this.unhealthyRate = unhealthyRate;
     }
 

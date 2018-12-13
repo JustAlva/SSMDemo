@@ -13,10 +13,7 @@ import com.zkd.common.constant.StepConstant;
 import com.zkd.dao.map.*;
 import com.zkd.entity.*;
 import com.zkd.service.IMeasureVerificationService;
-import com.zkd.utils.EncryptUtils;
-import com.zkd.utils.FileUtils;
-import com.zkd.utils.MyDateUtils;
-import com.zkd.utils.ProcessDealUtils;
+import com.zkd.utils.*;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,7 +65,7 @@ public class MeasureVerificationService implements IMeasureVerificationService {
         RequestMeasureVerificationSubmitDataBean requestData = new EncryptUtils<RequestMeasureVerificationSubmitDataBean>().decryptObj(data, RequestMeasureVerificationSubmitDataBean.class);
         if (requestData != null) {
 
-            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(requestData.getCurrentStepId());
+            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(StringUtils.parseString2Int(requestData.getCurrentStepId()));
             if (currentDealStep.getFlag() == 0) {
                 Date now = MyDateUtils.getCurrentDate();
                 ProcessDealUtils processDealUtils = new ProcessDealUtils();
@@ -104,11 +101,11 @@ public class MeasureVerificationService implements IMeasureVerificationService {
                 }
 
                 //1.保存当前步骤信息
-                MeasureVerificationQE measureVerificationQE = new MeasureVerificationQE(requestData.getStepTableId(), 5, requestData.getFlowID(), requestData.getRepeatNumber(), requestData.isWrongCheck() ? (byte) 1 : (byte) 0, requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getSelectBackStep(), requestData.getUserCode(), now, requestData.getMeasureEffect());
+                MeasureVerificationQE measureVerificationQE = new MeasureVerificationQE(StringUtils.parseString2Int(requestData.getStepTableId()), 5, requestData.getFlowID(), requestData.getRepeatNumber(), requestData.isWrongCheck() ? (byte) 1 : (byte) 0, requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getSelectBackStep(), requestData.getUserCode(), now, requestData.getMeasureEffect());
                 measureVerificationQEDao.updateByPrimaryKeySelective(measureVerificationQE);
 
                 //2.将当前节点处理表中该步骤结束
-                processDealUtils.endCurrentStep(currentDealStepDao, requestData.getCurrentStepId(),requestData.isAdopt(),  requestData.getUserCode(), now);
+                processDealUtils.endCurrentStep(currentDealStepDao, StringUtils.parseString2Int(requestData.getCurrentStepId()),requestData.isAdopt(),  requestData.getUserCode(), now);
 
                 boolean tag = true;
                 //3.在下个节点表中插入一条记录，并返回id
@@ -140,7 +137,7 @@ public class MeasureVerificationService implements IMeasureVerificationService {
                 }
                 if (tag) {
                     //processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now);
-                    processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,requestData.getCurrentStepId(),requestData.getStepTableId());
+                    processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,StringUtils.parseString2Int(requestData.getCurrentStepId()),StringUtils.parseString2Int(requestData.getStepTableId()));
                 }
                 processDealUtils.saveRecord(recordSubmitDao, nextStep, new Gson().toJson(requestData), "措施验证", now);
 

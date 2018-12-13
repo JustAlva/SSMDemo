@@ -19,6 +19,21 @@ public class StringUtils {
         return new String(Base64.encodeBase64(salt)).substring(1, 1 + n);
     }
 
+    public static Integer parseString2Int(String str){
+        if (str == null || str.equals("")) {
+            return 0;
+        }else {
+            return Integer.parseInt(str);
+        }
+    }
+    public static Double parseString2Double(String str){
+        if (str == null || str.equals("")) {
+            return 0.0;
+        }else {
+            return Double.parseDouble(str);
+        }
+    }
+
 
     /**
      * list 转 string 以 ，隔开
@@ -43,5 +58,6 @@ public class StringUtils {
             return "," + value;
         }
     }
+
 
 }

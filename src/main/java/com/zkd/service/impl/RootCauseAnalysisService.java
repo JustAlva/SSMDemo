@@ -73,7 +73,7 @@ public class RootCauseAnalysisService implements IRootCauseAnalysisService {
         ReturnDataBean returnData;
         RequestRootCauseAnalysisSubmitDataBean requestData = new EncryptUtils<RequestRootCauseAnalysisSubmitDataBean>().decryptObj(data, RequestRootCauseAnalysisSubmitDataBean.class);
         if (requestData != null) {
-            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(requestData.getCurrentStepId());
+            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(StringUtils.parseString2Int(requestData.getCurrentStepId()));
             if (currentDealStep.getFlag() == 0) {
                 StepJumpBean nextStep = new StepJumpBean(StepConstant.QRQC_CAUSE_ANALYSIS_ROOT_CODE, StepConstant.QRQC_CAUSE_ANALYSIS_ROOT_NAME, requestData.getUserCode(), requestData.getFlowID(), requestData.isAdopt());
                 if (requestData.isAdopt()) {
@@ -91,11 +91,11 @@ public class RootCauseAnalysisService implements IRootCauseAnalysisService {
                 String needUpdateData = StringUtils.list2String(requestData.getUpdateDatasList());
 
                 //1.保存提交的数据
-                RootCauseAnalysisWithBLOBs rootCauseAnalysis = new RootCauseAnalysisWithBLOBs(requestData.getStepTableId(), 5,(byte)(requestData.isAdopt()?1:0), requestData.getFlowID(), requestData.getGenerativeRes(), requestData.getOutFlowRes(), requestData.getImprovementRes(), requestData.getPlanFinishDate(), requestData.getPreventiveRes(), requestData.getPreventiveFinishDate(), requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getUserCode(), now, requestData.getGenerativeCause(), requestData.getOutFlowCause(), requestData.getImprovement(), requestData.getPreventiveMeasure(), needUpdateData);
+                RootCauseAnalysisWithBLOBs rootCauseAnalysis = new RootCauseAnalysisWithBLOBs(StringUtils.parseString2Int(requestData.getStepTableId()), 5,(byte)(requestData.isAdopt()?1:0), requestData.getFlowID(), requestData.getGenerativeRes(), requestData.getOutFlowRes(), requestData.getImprovementRes(), requestData.getPlanFinishDate(), requestData.getPreventiveRes(), requestData.getPreventiveFinishDate(), requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getUserCode(), now, requestData.getGenerativeCause(), requestData.getOutFlowCause(), requestData.getImprovement(), requestData.getPreventiveMeasure(), needUpdateData);
                 rootCauseAnalysisDao.updateByPrimaryKeySelective(rootCauseAnalysis);
 
                 //2.将当前节点处理表中该步骤结束
-                processDealUtils.endCurrentStep(currentDealStepDao, requestData.getCurrentStepId(), requestData.isAdopt(), requestData.getUserCode(), now);
+                processDealUtils.endCurrentStep(currentDealStepDao, StringUtils.parseString2Int(requestData.getCurrentStepId()), requestData.isAdopt(), requestData.getUserCode(), now);
 
                 //3.在下个节点表中插入一条记录，并返回id
                 switch (nextStep.getEndCode()) {
@@ -112,7 +112,7 @@ public class RootCauseAnalysisService implements IRootCauseAnalysisService {
                 }
                 //4.5.
                 //processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now);
-                processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,requestData.getCurrentStepId(),requestData.getStepTableId());
+                processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,StringUtils.parseString2Int(requestData.getCurrentStepId()),StringUtils.parseString2Int(requestData.getStepTableId()));
 
                 //6.保存记录
                 processDealUtils.saveRecord(recordSubmitDao, nextStep, new Gson().toJson(requestData), "根本原因分析和改善措施", now);

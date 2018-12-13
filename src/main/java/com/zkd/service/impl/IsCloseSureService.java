@@ -74,7 +74,7 @@ public class IsCloseSureService implements IIsCloseSureService {
         ReturnDataBean returnData;
         RequestIsCloseSureSubmitDataBean requestData = new EncryptUtils<RequestIsCloseSureSubmitDataBean>().decryptObj(data, RequestIsCloseSureSubmitDataBean.class);
         if (requestData != null) {
-            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(requestData.getCurrentStepId());
+            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(StringUtils.parseString2Int(requestData.getCurrentStepId()));
             if (currentDealStep.getFlag() == 0) {
                 Date now = MyDateUtils.getCurrentDate();
                 ProcessDealUtils processDealUtils = new ProcessDealUtils();
@@ -110,11 +110,11 @@ public class IsCloseSureService implements IIsCloseSureService {
                     isUpload = true;
                 }
                 //1.保存提交的数据
-                QEIsClosed qeIsClosed = new QEIsClosed(requestData.getStepTableId(), 5, requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getFlowID(), requestData.getChangeDate(), requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getSelectBackStep(), isUpload ? (byte) 1 : (byte) 0, requestData.getUserCode(), now);
+                QEIsClosed qeIsClosed = new QEIsClosed(StringUtils.parseString2Int(requestData.getStepTableId()), 5, requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getFlowID(), requestData.getChangeDate(), requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getSelectBackStep(), isUpload ? (byte) 1 : (byte) 0, requestData.getUserCode(), now);
                 qeIsClosedDao.updateByPrimaryKeySelective(qeIsClosed);
 
                 //2.将当前节点处理表中该步骤结束
-                processDealUtils.endCurrentStep(currentDealStepDao, requestData.getCurrentStepId(), requestData.isAdopt(), requestData.getUserCode(), now);
+                processDealUtils.endCurrentStep(currentDealStepDao, StringUtils.parseString2Int(requestData.getCurrentStepId()), requestData.isAdopt(), requestData.getUserCode(), now);
 
                 //3.在下个节点表中插入一条记录，并返回id
                 switch (nextStep.getEndCode()) {
@@ -135,7 +135,7 @@ public class IsCloseSureService implements IIsCloseSureService {
                         break;
                 }
                 //4.5.
-                processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now, requestData.getCurrentStepId(), requestData.getStepTableId());
+                processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now, StringUtils.parseString2Int(requestData.getCurrentStepId()), StringUtils.parseString2Int(requestData.getStepTableId()));
 
                 //6.保存记录
                 processDealUtils.saveRecord(recordSubmitDao, nextStep, new Gson().toJson(requestData), "部门审核", now);

@@ -13,10 +13,7 @@ import com.zkd.common.constant.StepConstant;
 import com.zkd.dao.map.*;
 import com.zkd.entity.*;
 import com.zkd.service.IQEChiefAuditService;
-import com.zkd.utils.CommonFunctionUtils;
-import com.zkd.utils.EncryptUtils;
-import com.zkd.utils.MyDateUtils;
-import com.zkd.utils.ProcessDealUtils;
+import com.zkd.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -77,7 +74,7 @@ public class QEChiefAuditService implements IQEChiefAuditService {
         ReturnDataBean returnData;
         RequestQeChiefAuditSubmitDataBean requestData = new EncryptUtils<RequestQeChiefAuditSubmitDataBean>().decryptObj(data, RequestQeChiefAuditSubmitDataBean.class);
         if (requestData != null) {
-            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(requestData.getCurrentStepId());
+            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(StringUtils.parseString2Int(requestData.getCurrentStepId()));
             if (currentDealStep.getFlag() == 0) {
                 Date now = MyDateUtils.getCurrentDate();
                 ProcessDealUtils processDealUtils = new ProcessDealUtils();
@@ -99,11 +96,11 @@ public class QEChiefAuditService implements IQEChiefAuditService {
                 }
 
                 //1.保存提交的数据
-                QEChiefAudit qeChiefAudit = new QEChiefAudit(requestData.getCurrentStepId(), 5, requestData.getFlowID(), requestData.isAdoptOrBack() ? (byte) 1 : (byte) 0, requestData.getUserCode(), now);
+                QEChiefAudit qeChiefAudit = new QEChiefAudit(StringUtils.parseString2Int(requestData.getCurrentStepId()), 5, requestData.getFlowID(), requestData.isAdoptOrBack() ? (byte) 1 : (byte) 0, requestData.getUserCode(), now);
                 qeChiefAuditDao.updateByPrimaryKeySelective(qeChiefAudit);
 
                 //2.将当前节点处理表中该步骤结束
-                processDealUtils.endCurrentStep(currentDealStepDao, requestData.getCurrentStepId(), requestData.isAdoptOrBack(), requestData.getUserCode(), now);
+                processDealUtils.endCurrentStep(currentDealStepDao, StringUtils.parseString2Int(requestData.getCurrentStepId()), requestData.isAdoptOrBack(), requestData.getUserCode(), now);
 
                 //3.在下个节点表中插入一条记录，并返回id
                 switch (nextStep.getEndCode()) {
@@ -115,7 +112,7 @@ public class QEChiefAuditService implements IQEChiefAuditService {
                 }
                 //4.5.
                 if (!requestData.isAdoptOrBack()) {
-                    processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now, requestData.getCurrentStepId(), requestData.getStepTableId());
+                    processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now, StringUtils.parseString2Int(requestData.getCurrentStepId()),StringUtils.parseString2Int( requestData.getStepTableId()));
                 } else {
                     StepDealUser qrqcDealUser = new StepDealUser(nextStep.getFlowID(), nextStep.getEndCode() + "", nextStep.getEndUser(), nextStep.getStartUser(), now);
                     stepDealUserDao.insertSelective(qrqcDealUser);

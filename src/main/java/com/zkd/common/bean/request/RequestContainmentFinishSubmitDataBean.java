@@ -2,19 +2,19 @@ package com.zkd.common.bean.request;
 
 public class RequestContainmentFinishSubmitDataBean {
 
-    private int currentStepId;//QRQC_CURRENT_DEAL_STEP 表的id
-    private int stepTableId;//信息存入表的id
-    private String flowID;//QRQC流程 流水号
-    private String userCode;//用户id
-    private int inventoryProduct;//在制品库存
-    private String disposeMeasureProduct;//在制品处理措施；
-    private String dealResultProduct;//在制品处理结果；
-    private int inventoryFinished;//成品库存
-    private String disposeMeasureFinished;//成品处理措施
-    private String dealResultFinished;//成品处理结果
-    private boolean isAdopt  ;//确定，默认； false:退回到初步原因分析
+    private String currentStepId;
+    private String stepTableId;
+    private String flowID;
+    private String userCode;
+    private String inventoryProduct;
+    private String disposeMeasureProduct;
+    private String dealResultProduct;
+    private String inventoryFinished;
+    private String disposeMeasureFinished;
+    private String dealResultFinished;
+    private boolean isAdopt  ;
 
-    public RequestContainmentFinishSubmitDataBean(int currentStepId, int stepTableId, String flowID, String userCode, int inventoryProduct, String disposeMeasureProduct, String dealResultProduct, int inventoryFinished, String disposeMeasureFinished, String dealResultFinished, boolean isAdopt) {
+    public RequestContainmentFinishSubmitDataBean(String currentStepId, String stepTableId, String flowID, String userCode, String inventoryProduct, String disposeMeasureProduct, String dealResultProduct, String inventoryFinished, String disposeMeasureFinished, String dealResultFinished, boolean isAdopt) {
         this.currentStepId = currentStepId;
         this.stepTableId = stepTableId;
         this.flowID = flowID;
@@ -28,19 +28,19 @@ public class RequestContainmentFinishSubmitDataBean {
         this.isAdopt = isAdopt;
     }
 
-    public int getCurrentStepId() {
+    public String getCurrentStepId() {
         return currentStepId;
     }
 
-    public void setCurrentStepId(int currentStepId) {
+    public void setCurrentStepId(String currentStepId) {
         this.currentStepId = currentStepId;
     }
 
-    public int getStepTableId() {
+    public String getStepTableId() {
         return stepTableId;
     }
 
-    public void setStepTableId(int stepTableId) {
+    public void setStepTableId(String stepTableId) {
         this.stepTableId = stepTableId;
     }
 
@@ -60,11 +60,11 @@ public class RequestContainmentFinishSubmitDataBean {
         this.userCode = userCode;
     }
 
-    public int getInventoryProduct() {
+    public String getInventoryProduct() {
         return inventoryProduct;
     }
 
-    public void setInventoryProduct(int inventoryProduct) {
+    public void setInventoryProduct(String inventoryProduct) {
         this.inventoryProduct = inventoryProduct;
     }
 
@@ -84,11 +84,11 @@ public class RequestContainmentFinishSubmitDataBean {
         this.dealResultProduct = dealResultProduct;
     }
 
-    public int getInventoryFinished() {
+    public String getInventoryFinished() {
         return inventoryFinished;
     }
 
-    public void setInventoryFinished(int inventoryFinished) {
+    public void setInventoryFinished(String inventoryFinished) {
         this.inventoryFinished = inventoryFinished;
     }
 

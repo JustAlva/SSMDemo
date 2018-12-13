@@ -17,6 +17,7 @@ import com.zkd.service.IPreliminaryCauseAnalysisService;
 import com.zkd.utils.EncryptUtils;
 import com.zkd.utils.MyDateUtils;
 import com.zkd.utils.ProcessDealUtils;
+import com.zkd.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -74,7 +75,7 @@ public class PreliminaryCauseAnalysisService implements IPreliminaryCauseAnalysi
             }
             returnBean.setSelectDepartment(stepDepartmentList);
 
-            PreliminaryCauseAnalysis currentBean = preliminaryCauseAnalysisDao.selectByPrimaryKey(requestData.getStepTableId());
+            PreliminaryCauseAnalysis currentBean = preliminaryCauseAnalysisDao.selectByPrimaryKey(StringUtils.parseString2Int(requestData.getStepTableId()));
             if (currentBean != null) {
                 returnBean.setBackFlag(currentBean.getBackFlag());
             }
@@ -100,7 +101,7 @@ public class PreliminaryCauseAnalysisService implements IPreliminaryCauseAnalysi
         ReturnDataBean returnData = null;
         RequestPreliminaryCauseSubmitDataBean requestData = new EncryptUtils<RequestPreliminaryCauseSubmitDataBean>().decryptObj(data, RequestPreliminaryCauseSubmitDataBean.class);
         if (requestData != null) {
-            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(requestData.getCurrentStepId());
+            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(StringUtils.parseString2Int(requestData.getCurrentStepId()));
             if (currentDealStep.getFlag() == 0) {
                 Date now = MyDateUtils.getCurrentDate();
                 ProcessDealUtils processDealUtils = new ProcessDealUtils();
@@ -147,7 +148,7 @@ public class PreliminaryCauseAnalysisService implements IPreliminaryCauseAnalysi
                 //back_flag back_user 需要添加
 
                 //1.将提交的数据提交
-                PreliminaryCauseAnalysis preliminaryCauseAnalysis = new PreliminaryCauseAnalysis(requestData.getStepTableId(), 5, requestData.getFlowID(), exStr.toString(), exStr.toString(), resStr.toString(), resStr.toString(), requestData.getSupplier(), partsStr.toString(), finishedStr.toString(), rootCauseStr.toString(), null, requestData.getUserCode(), now, requestData.getCauseAnalysis());
+                PreliminaryCauseAnalysis preliminaryCauseAnalysis = new PreliminaryCauseAnalysis(StringUtils.parseString2Int(requestData.getStepTableId()), 5, requestData.getFlowID(), exStr.toString(), exStr.toString(), resStr.toString(), resStr.toString(), requestData.getSupplier(), partsStr.toString(), finishedStr.toString(), rootCauseStr.toString(), null, requestData.getUserCode(), now, requestData.getCauseAnalysis());
                 preliminaryCauseAnalysisDao.updateById(preliminaryCauseAnalysis);
 
                 //2.更新总表下个节点处理人
@@ -155,7 +156,7 @@ public class PreliminaryCauseAnalysisService implements IPreliminaryCauseAnalysi
                 //totalFlowDao.updateByFlowId(totalFlow);
 
                 //3.将当前节点处理表中该步骤结束
-                CurrentDealStep endStep = new CurrentDealStep(requestData.getCurrentStepId(),(byte)1, (byte)1, requestData.getUserCode(), now);
+                CurrentDealStep endStep = new CurrentDealStep(StringUtils.parseString2Int(requestData.getCurrentStepId()),(byte)1, (byte)1, requestData.getUserCode(), now);
                 currentDealStepDao.updateEndStep(endStep);
 
                 //4.插入下个节点信息
@@ -180,7 +181,7 @@ public class PreliminaryCauseAnalysisService implements IPreliminaryCauseAnalysi
                     }
 
 
-                    processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now, requestData.getCurrentStepId(), requestData.getStepTableId());
+                    processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,StringUtils.parseString2Int( requestData.getCurrentStepId()), StringUtils.parseString2Int(requestData.getStepTableId()));
 
                     //(2) 在当前处理表中插入新的节点处理信息
                     // CurrentDealStep nextDealStep = new CurrentDealStep((byte) 0, nextStep.getStartUser(), now, nextStep.getStartCode(), nextStep.getFlowID(), nextStep.getEndCode(), nextStep.getEndName(), nextStep.getEndUser(), nextStep.getEndTableId(), nextStep.getStartUser(), now);

@@ -1,17 +1,17 @@
 package com.zkd.common.bean.request;
 
 public class RequestPreliminaryCauseAnalysisLoadDataBean {
-    private int stepTableId;
+    private String stepTableId;
 
-    public RequestPreliminaryCauseAnalysisLoadDataBean(int stepTableId) {
+    public RequestPreliminaryCauseAnalysisLoadDataBean(String stepTableId) {
         this.stepTableId = stepTableId;
     }
 
-    public int getStepTableId() {
+    public String getStepTableId() {
         return stepTableId;
     }
 
-    public void setStepTableId(int stepTableId) {
+    public void setStepTableId(String stepTableId) {
         this.stepTableId = stepTableId;
     }
 }

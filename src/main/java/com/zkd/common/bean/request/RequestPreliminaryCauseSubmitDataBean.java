@@ -5,8 +5,8 @@ import com.zkd.common.bean.other.UserDataBean;
 import java.util.List;
 
 public class RequestPreliminaryCauseSubmitDataBean {
-    private Integer currentStepId  ;//QRQC_CURRENT_DEAL_STEP 表的id
-    private Integer stepTableId  ;//信息存入表的id
+    private String currentStepId  ;//QRQC_CURRENT_DEAL_STEP 表的id
+    private String stepTableId  ;//信息存入表的id
     private String flowID  ;//QRQC流程 流水号
     private String userCode  ;//用户id
     private String causeAnalysis  ;//初步原因分析
@@ -18,7 +18,7 @@ public class RequestPreliminaryCauseSubmitDataBean {
     private List<UserDataBean> selectRootCauseList ;//根本原因分析和改善措施处理人员
     private String type  ;//类型，退回类型
 
-    public RequestPreliminaryCauseSubmitDataBean(Integer currentStepId, Integer stepTableId, String flowID, String userCode, String causeAnalysis, List<String> exceptionTypeList, List<String> responsibilityTypeList, String supplier, List<UserDataBean> selectParts, List<UserDataBean> selectFinished, List<UserDataBean> selectRootCauseList, String type) {
+    public RequestPreliminaryCauseSubmitDataBean(String currentStepId, String stepTableId, String flowID, String userCode, String causeAnalysis, List<String> exceptionTypeList, List<String> responsibilityTypeList, String supplier, List<UserDataBean> selectParts, List<UserDataBean> selectFinished, List<UserDataBean> selectRootCauseList, String type) {
         this.currentStepId = currentStepId;
         this.stepTableId = stepTableId;
         this.flowID = flowID;
@@ -33,19 +33,19 @@ public class RequestPreliminaryCauseSubmitDataBean {
         this.type = type;
     }
 
-    public Integer getCurrentStepId() {
+    public String getCurrentStepId() {
         return currentStepId;
     }
 
-    public void setCurrentStepId(Integer currentStepId) {
+    public void setCurrentStepId(String currentStepId) {
         this.currentStepId = currentStepId;
     }
 
-    public Integer getStepTableId() {
+    public String getStepTableId() {
         return stepTableId;
     }
 
-    public void setStepTableId(Integer stepTableId) {
+    public void setStepTableId(String stepTableId) {
         this.stepTableId = stepTableId;
     }
 

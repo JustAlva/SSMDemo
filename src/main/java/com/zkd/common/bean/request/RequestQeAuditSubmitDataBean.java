@@ -5,15 +5,15 @@ import com.zkd.common.bean.back.ReturnQEAuditLoadDataBean;
 import java.util.List;
 
 public class RequestQeAuditSubmitDataBean {
-    private int currentStepId;
-    private int stepTableId;
+    private String currentStepId;
+    private String stepTableId;
     private String flowID;
     private String userCode;
     private boolean isAdopt  ;
     private boolean isExport ;
     private List<ReturnQEAuditLoadDataBean> selectBackData;
 
-    public RequestQeAuditSubmitDataBean(int currentStepId, int stepTableId, String flowID, String userCode, boolean isAdopt, boolean isExport, List<ReturnQEAuditLoadDataBean> selectBackData) {
+    public RequestQeAuditSubmitDataBean(String currentStepId, String stepTableId, String flowID, String userCode, boolean isAdopt, boolean isExport, List<ReturnQEAuditLoadDataBean> selectBackData) {
         this.currentStepId = currentStepId;
         this.stepTableId = stepTableId;
         this.flowID = flowID;
@@ -23,19 +23,19 @@ public class RequestQeAuditSubmitDataBean {
         this.selectBackData = selectBackData;
     }
 
-    public int getCurrentStepId() {
+    public String getCurrentStepId() {
         return currentStepId;
     }
 
-    public void setCurrentStepId(int currentStepId) {
+    public void setCurrentStepId(String currentStepId) {
         this.currentStepId = currentStepId;
     }
 
-    public int getStepTableId() {
+    public String getStepTableId() {
         return stepTableId;
     }
 
-    public void setStepTableId(int stepTableId) {
+    public void setStepTableId(String stepTableId) {
         this.stepTableId = stepTableId;
     }
 

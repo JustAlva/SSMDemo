@@ -13,6 +13,7 @@ import com.zkd.dao.map.UserInfoMapper;
 import com.zkd.entity.ConfDepartment;
 import com.zkd.service.IStaffService;
 import com.zkd.utils.EncryptUtils;
+import com.zkd.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class StaffService implements IStaffService {
         List<ConfDepartment> departmentList= new ArrayList<>();
         List<UserDataBean> userList = new ArrayList<>();
         RequestSelectStaffDepartmentBean requestsBean = (RequestSelectStaffDepartmentBean) new EncryptUtils().decryptObj(data, RequestSelectStaffDepartmentBean.class);
-        int departmentId = requestsBean.getDepartmentId();
+        int departmentId = StringUtils.parseString2Int(requestsBean.getDepartmentId());
         if (departmentId == -3) {
             String role = requestsBean.getRole();
             if (role.equals("")) {

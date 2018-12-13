@@ -15,6 +15,7 @@ import com.zkd.service.IContainmentPartsService;
 import com.zkd.utils.EncryptUtils;
 import com.zkd.utils.MyDateUtils;
 import com.zkd.utils.ProcessDealUtils;
+import com.zkd.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -65,11 +66,11 @@ public class ContainmentPartsService implements IContainmentPartsService {
         ReturnDataBean returnData;
         RequestContainmentPartsSubmitDataBean requestData = new EncryptUtils<RequestContainmentPartsSubmitDataBean>().decryptObj(data, RequestContainmentPartsSubmitDataBean.class);
         if (requestData != null) {
-            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(requestData.getCurrentStepId());
+            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(StringUtils.parseString2Int(requestData.getCurrentStepId()));
             if (currentDealStep!=null&&currentDealStep.getFlag() == 0) {
                 StepJumpBean nextStep = new StepJumpBean(StepConstant.QRQC_CONTAINMENT_ACTION_PARTS_CODE, StepConstant.QRQC_CONTAINMENT_ACTION_PARTS_NAME, requestData.getUserCode(), requestData.getFlowID(), requestData.isAdopt());
                 boolean isClose = false;
-                if (requestData.getExceptionType().equals("外观") && requestData.getUnhealthyRate() < 5.0) {
+                if (requestData.getExceptionType().equals("外观") && StringUtils.parseString2Double( requestData.getUnhealthyRate()) < 5.0) {
                     isClose = true;
                 }
                 if (isClose) {
@@ -88,11 +89,11 @@ public class ContainmentPartsService implements IContainmentPartsService {
                 Date now = MyDateUtils.getCurrentDate();
                 ProcessDealUtils processDealUtils = new ProcessDealUtils();
                 //1.保存提交的数据
-                ContainmentPartsWithBLOBs containmentParts = new ContainmentPartsWithBLOBs(requestData.getStepTableId(), 5,(byte) (requestData.isAdopt() ? 1 : 0),   requestData.getInventory(), (byte) (requestData.isSupplement() ? 1 : 0), MyDateUtils.getDate(requestData.getSupplementDate()), requestData.getUnhealthyNumber(), requestData.getUnhealthyRate(),(byte) (requestData.isAdopt() ? 1 : 0) , requestData.getUserCode(), now, requestData.getDisposeMeasure(), requestData.getDealResult());
+                ContainmentPartsWithBLOBs containmentParts = new ContainmentPartsWithBLOBs(StringUtils.parseString2Int(requestData.getStepTableId()), 5,(byte) (requestData.isAdopt() ? 1 : 0),   StringUtils.parseString2Int(requestData.getInventory()), (byte) (requestData.isSupplement() ? 1 : 0), MyDateUtils.getDate(requestData.getSupplementDate()), StringUtils.parseString2Int(requestData.getUnhealthyNumber()), StringUtils.parseString2Double( requestData.getUnhealthyRate()),(byte) (requestData.isAdopt() ? 1 : 0) , requestData.getUserCode(), now, requestData.getDisposeMeasure(), requestData.getDealResult());
                 containmentPartsDao.updateByPrimaryKeySelective(containmentParts);
 
                 //2.将当前节点处理表中该步骤结束
-                processDealUtils.endCurrentStep(currentDealStepDao, requestData.getCurrentStepId(),requestData.isAdopt(), requestData.getUserCode(), now);
+                processDealUtils.endCurrentStep(currentDealStepDao, StringUtils.parseString2Int(requestData.getCurrentStepId()),requestData.isAdopt(), requestData.getUserCode(), now);
 
                 //更新总表的计划完成时间？？ 原来是改善措施完成时间，但是有多个根本原因分析，取哪个？
 
@@ -128,7 +129,7 @@ public class ContainmentPartsService implements IContainmentPartsService {
                 }
                 if (tag) {
                     //processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now);
-                    processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,requestData.getCurrentStepId(),requestData.getStepTableId());
+                    processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,StringUtils.parseString2Int(requestData.getCurrentStepId()),StringUtils.parseString2Int(requestData.getStepTableId()));
                 }
                 processDealUtils.saveRecord(recordSubmitDao, nextStep, new Gson().toJson(requestData), "围堵措施-零部件", now);
 

@@ -13,6 +13,7 @@ import com.zkd.service.IContainmentFinishService;
 import com.zkd.utils.EncryptUtils;
 import com.zkd.utils.MyDateUtils;
 import com.zkd.utils.ProcessDealUtils;
+import com.zkd.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -46,7 +47,7 @@ public class ContainmentFinishService implements IContainmentFinishService {
         ReturnDataBean returnData;
         RequestContainmentFinishSubmitDataBean requestData = new EncryptUtils<RequestContainmentFinishSubmitDataBean>().decryptObj(data, RequestContainmentFinishSubmitDataBean.class);
         if (requestData != null) {
-            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(requestData.getCurrentStepId());
+            CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(StringUtils.parseString2Int(requestData.getCurrentStepId()));
             if (currentDealStep.getFlag() == 0) {
                 StepJumpBean nextStep = new StepJumpBean(StepConstant.QRQC_CONTAINMENT_ACTION_FINISHED_CODE, StepConstant.QRQC_CONTAINMENT_ACTION_FINISHED_NAME, requestData.getUserCode(), requestData.getFlowID(), requestData.isAdopt());
                 if (requestData.isAdopt()) {
@@ -59,11 +60,11 @@ public class ContainmentFinishService implements IContainmentFinishService {
                 Date now = MyDateUtils.getCurrentDate();
                 ProcessDealUtils processDealUtils = new ProcessDealUtils();
                 //1.保存提交的数据
-                ContainmentFinishedWithBLOBs containmentFinishedWithBLOBs = new ContainmentFinishedWithBLOBs(requestData.getStepTableId(), 5,(byte)(requestData.isAdopt()?1:0), requestData.getFlowID(), requestData.getInventoryProduct(), requestData.getInventoryFinished(), requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getUserCode(), now, requestData.getDisposeMeasureProduct(), requestData.getDealResultProduct(), requestData.getDisposeMeasureFinished(), requestData.getDealResultFinished());
+                ContainmentFinishedWithBLOBs containmentFinishedWithBLOBs = new ContainmentFinishedWithBLOBs(StringUtils.parseString2Int(requestData.getStepTableId()), 5,(byte)(requestData.isAdopt()?1:0), requestData.getFlowID(), StringUtils.parseString2Int(requestData.getInventoryProduct()), StringUtils.parseString2Int(requestData.getInventoryFinished()), requestData.isAdopt() ? (byte) 1 : (byte) 0, requestData.getUserCode(), now, requestData.getDisposeMeasureProduct(), requestData.getDealResultProduct(), requestData.getDisposeMeasureFinished(), requestData.getDealResultFinished());
                 containmentFinishedDao.updateByPrimaryKeySelective(containmentFinishedWithBLOBs);
 
                 //2.将当前节点处理表中该步骤结束
-                processDealUtils.endCurrentStep(currentDealStepDao, requestData.getCurrentStepId(), requestData.isAdopt(), requestData.getUserCode(),now);
+                processDealUtils.endCurrentStep(currentDealStepDao, StringUtils.parseString2Int(requestData.getCurrentStepId()), requestData.isAdopt(), requestData.getUserCode(),now);
 
                 boolean tag = true;
                 //3.在下个节点表中插入一条记录，并返回id
@@ -91,7 +92,7 @@ public class ContainmentFinishService implements IContainmentFinishService {
                 }
                 if (tag) {
                     //processDealUtils.newCurrentStep(currentDealStepDao,stepDealUserDao,nextStep,now);
-                    processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,requestData.getCurrentStepId(),requestData.getStepTableId());
+                    processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,StringUtils.parseString2Int(requestData.getCurrentStepId()),StringUtils.parseString2Int(requestData.getStepTableId()));
                 }
                 //6.保存记录
                 processDealUtils.saveRecord(recordSubmitDao,nextStep,new Gson().toJson(requestData),"围堵措施-在制品/成品",now);
