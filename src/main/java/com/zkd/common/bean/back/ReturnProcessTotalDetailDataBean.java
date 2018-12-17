@@ -1,28 +1,28 @@
 package com.zkd.common.bean.back;
 
-import com.zkd.entity.CommissionerFill;
+import com.zkd.common.bean.back.tablebean.CommissionFillDataBean;
 import com.zkd.entity.CurrentDealStep;
 
 import java.util.List;
 
 public class ReturnProcessTotalDetailDataBean {
 
-    private CommissionerFill commissionerFill;
+    private CommissionFillDataBean commissionerFill;
     private List<CurrentDealStep> stepList;
 
     public ReturnProcessTotalDetailDataBean() {
     }
 
-    public ReturnProcessTotalDetailDataBean(CommissionerFill commissionerFill, List<CurrentDealStep> stepList) {
+    public ReturnProcessTotalDetailDataBean(CommissionFillDataBean commissionerFill, List<CurrentDealStep> stepList) {
         this.commissionerFill = commissionerFill;
         this.stepList = stepList;
     }
 
-    public CommissionerFill getCommissionerFill() {
+    public CommissionFillDataBean getCommissionerFill() {
         return commissionerFill;
     }
 
-    public void setCommissionerFill(CommissionerFill commissionerFill) {
+    public void setCommissionerFill(CommissionFillDataBean commissionerFill) {
         this.commissionerFill = commissionerFill;
     }
 

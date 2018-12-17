@@ -98,7 +98,7 @@ public class PreliminaryCauseAnalysisService implements IPreliminaryCauseAnalysi
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
     @Override
     public String submit(String data) {
-        ReturnDataBean returnData = null;
+        ReturnDataBean returnData ;
         RequestPreliminaryCauseSubmitDataBean requestData = new EncryptUtils<RequestPreliminaryCauseSubmitDataBean>().decryptObj(data, RequestPreliminaryCauseSubmitDataBean.class);
         if (requestData != null) {
             CurrentDealStep currentDealStep = currentDealStepDao.selectByPrimaryKey(StringUtils.parseString2Int(requestData.getCurrentStepId()));

@@ -1,8 +1,7 @@
 package com.zkd.common.bean.back;
-import com.zkd.common.bean.other.UserDataBean;
-import com.zkd.entity.CommissionerFill;
 
-import java.util.Date;
+import com.zkd.common.bean.back.tablebean.CommissionFillDataBean;
+import com.zkd.common.bean.other.UserDataBean;
 
 /**
  * describe: 流程信息
@@ -10,17 +9,16 @@ import java.util.Date;
  * date: 2018/8/22 14:38
  */
 public class ReturnProcessDataBean {
-   private  Integer status;
-   private  String flowId;
-   private  UserDataBean createUser;
-   private  java.util.Date createDate;
-   //CurrentStepDataBean currentStepData;
-   private  Byte isClosedPre;
-   private  UserDataBean lastDealUser;
-   private  Date lastDealDate;
-   private  CommissionerFill commissionerFill;
+    private Integer status;
+    private String flowId;
+    private UserDataBean createUser;
+    private String createDate;
+    private Byte isClosedPre;
+    private UserDataBean lastDealUser;
+    private String lastDealDate;
+    private CommissionFillDataBean commissionerFill;
 
-    public ReturnProcessDataBean(Integer status, String flowId, Date createDate, Byte isClosedPre, Date lastDealDate) {
+    public ReturnProcessDataBean(Integer status, String flowId, String createDate, Byte isClosedPre, String lastDealDate) {
         this.status = status;
         this.flowId = flowId;
         this.createDate = createDate;
@@ -28,7 +26,7 @@ public class ReturnProcessDataBean {
         this.lastDealDate = lastDealDate;
     }
 
-    public ReturnProcessDataBean(Integer status, String flowId, UserDataBean createUser, Date createDate, Byte isClosedPre, UserDataBean lastDealUser, Date lastDealDate, CommissionerFill commissionerFill) {
+    public ReturnProcessDataBean(Integer status, String flowId, UserDataBean createUser, String createDate, Byte isClosedPre, UserDataBean lastDealUser, String lastDealDate, CommissionFillDataBean commissionerFill) {
         this.status = status;
         this.flowId = flowId;
         this.createUser = createUser;
@@ -63,11 +61,11 @@ public class ReturnProcessDataBean {
         this.createUser = createUser;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
@@ -87,19 +85,19 @@ public class ReturnProcessDataBean {
         this.lastDealUser = lastDealUser;
     }
 
-    public Date getLastDealDate() {
+    public String getLastDealDate() {
         return lastDealDate;
     }
 
-    public void setLastDealDate(Date lastDealDate) {
+    public void setLastDealDate(String lastDealDate) {
         this.lastDealDate = lastDealDate;
     }
 
-    public CommissionerFill getCommissionerFill() {
+    public CommissionFillDataBean getCommissionerFill() {
         return commissionerFill;
     }
 
-    public void setCommissionerFill(CommissionerFill commissionerFill) {
+    public void setCommissionerFill(CommissionFillDataBean commissionerFill) {
         this.commissionerFill = commissionerFill;
     }
 }

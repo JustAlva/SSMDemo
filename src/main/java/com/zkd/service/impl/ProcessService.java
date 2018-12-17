@@ -4,10 +4,10 @@ import com.zkd.common.bean.back.ReturnDataBean;
 import com.zkd.common.bean.back.ReturnProcessDataBean;
 import com.zkd.common.bean.back.ReturnProcessDealDataBean;
 import com.zkd.common.bean.back.ReturnProcessTotalDetailDataBean;
+import com.zkd.common.bean.back.tablebean.CommissionFillDataBean;
 import com.zkd.common.bean.other.UserDataBean;
 import com.zkd.common.bean.request.RequestLoadBaseDataBean;
 import com.zkd.common.constant.MsgConstant;
-import com.zkd.common.constant.StepConstant;
 import com.zkd.dao.map.CommissionerFillMapper;
 import com.zkd.dao.map.CurrentDealStepMapper;
 import com.zkd.dao.map.TotalFlowMapper;
@@ -17,6 +17,7 @@ import com.zkd.entity.CurrentDealStep;
 import com.zkd.entity.TotalFlow;
 import com.zkd.service.IProcessService;
 import com.zkd.utils.EncryptUtils;
+import com.zkd.utils.MyDateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,7 @@ public class ProcessService implements IProcessService {
         List<TotalFlow> processList = flowDao.selectAllFlow();
         List<ReturnProcessDataBean> returnProcessList = new ArrayList<>();
         for (TotalFlow flow : processList) {
-            ReturnProcessDataBean data = new ReturnProcessDataBean(flow.getStatus(), flow.getQrqcIdentifier(), flow.getCreateDate(), flow.getIsClosedPre(), flow.getUpdateDate());
+            ReturnProcessDataBean data = new ReturnProcessDataBean(flow.getStatus(), flow.getQrqcIdentifier(), MyDateUtils.getDate2String(flow.getCreateDate(), MyDateUtils.FORMAT_TYPE_3), flow.getIsClosedPre(), MyDateUtils.getDate2String(flow.getUpdateDate(), MyDateUtils.FORMAT_TYPE_3));
             List<UserDataBean> createUserList = userInfoDao.selectUserInfoById(flow.getCreateUser());
             if (createUserList != null && createUserList.size() > 0) {
                 data.setCreateUser(createUserList.get(0));
@@ -54,7 +55,7 @@ public class ProcessService implements IProcessService {
             }
             List<CommissionerFill> commissionerFillList = commissionerFillDao.selectByFlowId(flow.getQrqcIdentifier());
             if (commissionerFillList != null && commissionerFillList.size() > 0) {
-                data.setCommissionerFill(commissionerFillList.get(0));
+                data.setCommissionerFill(new CommissionFillDataBean(commissionerFillList.get(0)));
             }
             returnProcessList.add(data);
         }
@@ -71,7 +72,8 @@ public class ProcessService implements IProcessService {
             returnData.setStepList(stepList);
             List<CommissionerFill> commissionerList = commissionerFillDao.selectByFlowId(requestData.getFlowID());
             if (commissionerList != null & commissionerList.size() > 0) {
-                returnData.setCommissionerFill(commissionerList.get(0));
+                CommissionFillDataBean commissionFill = new CommissionFillDataBean(commissionerList.get(0));
+                returnData.setCommissionerFill(commissionFill);
             }
         }
         return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, returnData, MsgConstant.MSG_SUCCESS));
@@ -84,17 +86,17 @@ public class ProcessService implements IProcessService {
         List<ReturnProcessDealDataBean> returnList = new ArrayList<>();
         List<CurrentDealStep> dealList = currentDealStepDao.selectDealByUserNo(requestData);
         if (dealList != null) {
-           // for (CurrentDealStep currentStep : dealList) {
-                //UserDataBean createUser = userInfoDao.selectByUserNo(currentStep.getCreateUser());
-               // switch (currentStep.getCreateStepCode()) {
-                  //  case StepConstant.QRQC_COMMISSIONER_FILL_CODE:
-                        //CommissionerFill commissionerFill = commissionerFillDao.selectByPrimaryKey(data.);
-                        // ReturnProcessDealDataBean<CommissionerFill> totalData = new ReturnProcessDealDataBean<CommissionerFill>(currentStep, createUser, commissionerFill);
-                     //   break;
+            // for (CurrentDealStep currentStep : dealList) {
+            //UserDataBean createUser = userInfoDao.selectByUserNo(currentStep.getCreateUser());
+            // switch (currentStep.getCreateStepCode()) {
+            //  case StepConstant.QRQC_COMMISSIONER_FILL_CODE:
+            //CommissionerFill commissionerFill = commissionerFillDao.selectByPrimaryKey(data.);
+            // ReturnProcessDealDataBean<CommissionerFill> totalData = new ReturnProcessDealDataBean<CommissionerFill>(currentStep, createUser, commissionerFill);
+            //   break;
 
-               // }
+            // }
 
-           // }
+            // }
         }
         return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, dealList, MsgConstant.MSG_SUCCESS));
     }
