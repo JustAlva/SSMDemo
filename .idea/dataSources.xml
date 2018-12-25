@@ -15,7 +15,7 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="linux_qrqc" uuid="0077b1d3-91cd-4b12-a235-08869a17f765">
+    <data-source source="LOCAL" name="server_qrqc" uuid="f42bead7-e63b-45d7-8b57-a4661ed1f667">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>

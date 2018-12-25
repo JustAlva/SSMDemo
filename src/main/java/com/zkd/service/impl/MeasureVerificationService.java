@@ -46,6 +46,8 @@ public class MeasureVerificationService implements IMeasureVerificationService {
     QEIsClosedMapper qeIsClosedDao;
     @Autowired
     UploadImagesMapper uploadImagesDao;
+    @Autowired
+    TotalFlowMapper totalFlowDao;
 
     @Override
     public String load(String data) {
@@ -139,6 +141,8 @@ public class MeasureVerificationService implements IMeasureVerificationService {
                     //processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now);
                     processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,StringUtils.parseString2Int(requestData.getCurrentStepId()),StringUtils.parseString2Int(requestData.getStepTableId()));
                 }
+                processDealUtils.updateTotalFlowData(totalFlowDao,nextStep,now);
+
                 processDealUtils.saveRecord(recordSubmitDao, nextStep, new Gson().toJson(requestData), "措施验证", now);
 
                 //10.保存文件

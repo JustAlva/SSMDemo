@@ -46,6 +46,8 @@ public class DepartmentAuditService implements IDepartmentAuditService {
     CommissionerFillMapper commissionerFillDao;
     @Autowired
     QEAuditMapper qeAuditDao;
+    @Autowired
+    TotalFlowMapper totalFlowDao;
 
     @Override
     public String load(String data) {
@@ -112,7 +114,7 @@ public class DepartmentAuditService implements IDepartmentAuditService {
                 if (tag) {
                     processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now, StringUtils.parseString2Int(requestData.getCurrentStepId()), StringUtils.parseString2Int(requestData.getStepTableId()));
                 }
-
+                processDealUtils.updateTotalFlowData(totalFlowDao,nextStep,now);
                 //6.保存记录
                 processDealUtils.saveRecord(recordSubmitDao, nextStep, new Gson().toJson(requestData), "部门审核", now);
 

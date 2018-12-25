@@ -41,4 +41,14 @@ public class RootCauseAnalysisController {
             return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_FAIL, e.getMessage(), MsgConstant.MSG_ERROR));
         }
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/searchRepeat", method = RequestMethod.POST)
+    public String search(@RequestParam("data") String data) {
+        try {
+            return  rootCauseAnalysisService.searchRepeatNumber(data);
+        } catch (Exception e) {
+            return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_ERROR, e.getMessage(), MsgConstant.MSG_ERROR));
+        }
+    }
 }

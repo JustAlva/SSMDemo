@@ -17,6 +17,7 @@ import com.zkd.utils.EncryptUtils;
 import com.zkd.utils.MyDateUtils;
 import com.zkd.utils.ProcessDealUtils;
 import com.zkd.utils.StringUtils;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -46,6 +47,8 @@ public class QEAuditService implements IQEAuditService {
     RecordSubmitMapper recordSubmitDao;
     @Autowired
     DepartmentAuditMapper departmentAuditDao;
+    @Autowired
+    TotalFlowMapper totalFlowDao;
 
     @Override
     public String load(String data) {
@@ -144,6 +147,8 @@ public class QEAuditService implements IQEAuditService {
                         }
                         break;
                 }
+                processDealUtils.updateTotalFlowData(totalFlowDao,nextStep,now);
+
                 //6.保存记录
                 processDealUtils.saveRecord(recordSubmitDao, nextStep, new Gson().toJson(requestData), "方案审核确认", now);
 

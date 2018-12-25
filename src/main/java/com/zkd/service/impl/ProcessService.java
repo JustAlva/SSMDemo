@@ -7,6 +7,7 @@ import com.zkd.common.bean.back.ReturnProcessTotalDetailDataBean;
 import com.zkd.common.bean.back.tablebean.CommissionFillDataBean;
 import com.zkd.common.bean.other.UserDataBean;
 import com.zkd.common.bean.request.RequestLoadBaseDataBean;
+import com.zkd.common.bean.request.RequestTotalProcessSearchDataBean;
 import com.zkd.common.constant.MsgConstant;
 import com.zkd.dao.map.CommissionerFillMapper;
 import com.zkd.dao.map.CurrentDealStepMapper;
@@ -79,7 +80,6 @@ public class ProcessService implements IProcessService {
         return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, returnData, MsgConstant.MSG_SUCCESS));
     }
 
-
     @Override
     public String getDealProcess(String data) {
         RequestLoadBaseDataBean requestData = new EncryptUtils<RequestLoadBaseDataBean>().decryptObj(data, RequestLoadBaseDataBean.class);
@@ -105,6 +105,47 @@ public class ProcessService implements IProcessService {
     public String getFinishedProcess(String data) {
         RequestLoadBaseDataBean requestData = new EncryptUtils<RequestLoadBaseDataBean>().decryptObj(data, RequestLoadBaseDataBean.class);
         List<CurrentDealStep> finishList = currentDealStepDao.selectFinishedByUserNo(requestData);
+        return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, finishList, MsgConstant.MSG_SUCCESS));
+    }
+
+    @Override
+    public String search(String data) {
+        RequestTotalProcessSearchDataBean requestData = new EncryptUtils<RequestTotalProcessSearchDataBean>().decryptObj(data, RequestTotalProcessSearchDataBean.class);
+        List<ReturnProcessDataBean> returnProcessList = new ArrayList<>();
+        if (requestData != null) {
+            List<CommissionerFill> commissionerFillList = commissionerFillDao.selectTotalSearch("%"+requestData.getSearch()+"%");
+            for (CommissionerFill commissioner : commissionerFillList) {
+                TotalFlow totalFlow = flowDao.selectByFlowId(commissioner.getFlowId());
+                ReturnProcessDataBean dataBean = new ReturnProcessDataBean(totalFlow.getStatus(), totalFlow.getQrqcIdentifier(), MyDateUtils.getDate2String(totalFlow.getCreateDate(), MyDateUtils.FORMAT_TYPE_3), totalFlow.getIsClosedPre(), MyDateUtils.getDate2String(totalFlow.getUpdateDate(), MyDateUtils.FORMAT_TYPE_3));
+                List<UserDataBean> createUserList = userInfoDao.selectUserInfoById(totalFlow.getCreateUser());
+                if (createUserList != null && createUserList.size() > 0) {
+                    dataBean.setCreateUser(createUserList.get(0));
+                }
+                if (!totalFlow.getUpdateUser().equals("")) {
+                    List<UserDataBean> updateUserList = userInfoDao.selectUserInfoById(totalFlow.getUpdateUser());
+                    if (updateUserList != null && updateUserList.size() > 0) {
+                        dataBean.setLastDealUser(updateUserList.get(0));
+                    }
+                }
+                dataBean.setCommissionerFill(new CommissionFillDataBean(commissioner));
+                returnProcessList.add(dataBean);
+            }
+        }
+        ReturnDataBean<List<ReturnProcessDataBean>> returnDataBean = new ReturnDataBean<>(200, returnProcessList, MsgConstant.MSG_SUCCESS);
+        return new EncryptUtils<>().encryptObj(returnDataBean);
+    }
+
+    @Override
+    public String searchDeal(String data) {
+        RequestTotalProcessSearchDataBean requestData = new EncryptUtils<RequestTotalProcessSearchDataBean>().decryptObj(data, RequestTotalProcessSearchDataBean.class);
+        List<CurrentDealStep> dealList = currentDealStepDao.selectSearchDeal(requestData.getUserCode(),"%"+requestData.getSearch()+"%");
+        return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, dealList, MsgConstant.MSG_SUCCESS));
+    }
+
+    @Override
+    public String searchFinished(String data) {
+        RequestTotalProcessSearchDataBean requestData = new EncryptUtils<RequestTotalProcessSearchDataBean>().decryptObj(data, RequestTotalProcessSearchDataBean.class);
+        List<CurrentDealStep> finishList = currentDealStepDao.selectSearchFinished(requestData.getUserCode(),"%"+requestData.getSearch()+"%");
         return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, finishList, MsgConstant.MSG_SUCCESS));
     }
 }

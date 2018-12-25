@@ -3,9 +3,11 @@ package com.zkd.service.impl;
 import com.google.gson.Gson;
 import com.zkd.common.bean.back.ReturnDataBean;
 import com.zkd.common.bean.back.ReturnRootCauseAnalysisLoadDataBean;
+import com.zkd.common.bean.back.ReturnSearchRepeatNumberDataBean;
 import com.zkd.common.bean.other.StepJumpBean;
 import com.zkd.common.bean.request.RequestLoadBaseDataBean;
 import com.zkd.common.bean.request.RequestRootCauseAnalysisSubmitDataBean;
+import com.zkd.common.bean.request.RequestTotalProcessSearchDataBean;
 import com.zkd.common.bean.request.show.RequestShowLoadBaseBean;
 import com.zkd.common.constant.MsgConstant;
 import com.zkd.common.constant.StepConstant;
@@ -46,6 +48,8 @@ public class RootCauseAnalysisService implements IRootCauseAnalysisService {
     StepDealUserMapper stepDealUserDao;
     @Autowired
     RecordSubmitMapper recordSubmitDao;
+    @Autowired
+    TotalFlowMapper totalFlowDao;
 
     @Override
     public String load(String data) {
@@ -113,7 +117,7 @@ public class RootCauseAnalysisService implements IRootCauseAnalysisService {
                 //4.5.
                 //processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now);
                 processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,StringUtils.parseString2Int(requestData.getCurrentStepId()),StringUtils.parseString2Int(requestData.getStepTableId()));
-
+                processDealUtils.updateTotalFlowData(totalFlowDao,nextStep,now);
                 //6.保存记录
                 processDealUtils.saveRecord(recordSubmitDao, nextStep, new Gson().toJson(requestData), "根本原因分析和改善措施", now);
 
@@ -133,5 +137,21 @@ public class RootCauseAnalysisService implements IRootCauseAnalysisService {
         RequestShowLoadBaseBean requestData = new EncryptUtils<RequestShowLoadBaseBean>().decryptObj(data, RequestShowLoadBaseBean.class);
         RootCauseAnalysis detail = rootCauseAnalysisDao.selectByPrimaryKey(requestData.getTableId());
         return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, detail, MsgConstant.MSG_SUCCESS));
+    }
+
+    @Override
+    public String searchRepeatNumber(String data) {
+        RequestTotalProcessSearchDataBean requestData = new EncryptUtils<RequestTotalProcessSearchDataBean>().decryptObj(data,RequestTotalProcessSearchDataBean.class );
+        List<ReturnSearchRepeatNumberDataBean> returnData = new ArrayList<>();
+        if (requestData!=null) {
+            List<RootCauseAnalysisWithBLOBs> rootCause = rootCauseAnalysisDao.selectSearchRepeatNumber("%"+requestData.getSearch()+"%");
+            for (RootCauseAnalysisWithBLOBs root : rootCause
+                    ) {
+                List<CurrentDealStep>  currentStep = currentDealStepDao.selectByStepData("31",root.getId()+"");
+                ReturnSearchRepeatNumberDataBean dataBean = new ReturnSearchRepeatNumberDataBean(root, currentStep.get(0));
+                returnData.add(dataBean);
+            }
+        }
+        return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, returnData, MsgConstant.MSG_SUCCESS));
     }
 }

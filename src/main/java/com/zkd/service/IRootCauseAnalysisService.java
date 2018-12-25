@@ -6,4 +6,6 @@ public interface IRootCauseAnalysisService {
     String submit(String data);
 
     String getDetail(String data);
+
+    String searchRepeatNumber(String data);
 }

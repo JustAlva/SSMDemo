@@ -191,6 +191,8 @@ public class PreliminaryCauseAnalysisService implements IPreliminaryCauseAnalysi
                     // StepDealUser qrqcDealUser = new StepDealUser(nextStep.getFlowID(), nextStep.getEndCode() + "", nextStep.getEndUser(), nextStep.getStartUser(), now);
                     // stepDealUserDao.insertSelective(qrqcDealUser);
                 }
+                processDealUtils.updateTotalFlowData(totalFlowDao,nextSteps.get(0),now);
+
                 //5.保存记录
                 RecordSubmit recordSubmit = new RecordSubmit(null, requestData.getFlowID(), "初步原因分析", requestData.getUserCode(), now, new Gson().toJson(requestData));
                 recordSubmitDao.insertSelective(recordSubmit);

@@ -54,8 +54,8 @@ public class FileUtils {
                     type = getFileType2(file.getOriginalFilename());
                 }
                 String currentTimeString = MyDateUtils.getYearMonthDayString();
-                String fileDirStr = "/upload/" + saveType + "/" + currentTimeString + "/";
-                dirPath += "\\" + saveType + "\\" + currentTimeString + "\\";
+                String fileDirStr = "/"+"upload"+"/" + saveType + "/"+ currentTimeString + "/";
+                dirPath += "/" + saveType + "/" + currentTimeString + "/";
                 File fileDir = new File(dirPath);
                 if (!fileDir.exists()) {
                     fileDir.mkdirs();

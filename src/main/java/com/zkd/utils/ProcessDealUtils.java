@@ -4,9 +4,11 @@ import com.zkd.common.bean.other.StepJumpBean;
 import com.zkd.dao.map.CurrentDealStepMapper;
 import com.zkd.dao.map.RecordSubmitMapper;
 import com.zkd.dao.map.StepDealUserMapper;
+import com.zkd.dao.map.TotalFlowMapper;
 import com.zkd.entity.CurrentDealStep;
 import com.zkd.entity.RecordSubmit;
 import com.zkd.entity.StepDealUser;
+import com.zkd.entity.TotalFlow;
 
 import java.util.Date;
 
@@ -59,6 +61,16 @@ public class ProcessDealUtils {
         recordSubmitDao.insertSelective(recordSubmit);
     }
 
+    /**
+     * 更新总表当前处理人
+     * @param totalFlowDao TotalFlowMapper
+     * @param nextStep StepJumpBean
+     * @param time 时间
+     */
+    public void updateTotalFlowData(TotalFlowMapper totalFlowDao,  StepJumpBean nextStep ,Date time){
+        TotalFlow totalFlow = new TotalFlow(nextStep.getFlowID(), nextStep.getStartUser(), nextStep.getStartName(), nextStep.getStartCode()+"", time, nextStep.getStartUser());
+        totalFlowDao.updateByFlowId(totalFlow);
+    }
 
 
 }

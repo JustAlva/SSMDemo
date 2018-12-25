@@ -131,6 +131,8 @@ public class ContainmentPartsService implements IContainmentPartsService {
                     //processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now);
                     processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,StringUtils.parseString2Int(requestData.getCurrentStepId()),StringUtils.parseString2Int(requestData.getStepTableId()));
                 }
+                processDealUtils.updateTotalFlowData(totalFlowDao,nextStep,now);
+
                 processDealUtils.saveRecord(recordSubmitDao, nextStep, new Gson().toJson(requestData), "围堵措施-零部件", now);
 
                 returnData = new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, "", MsgConstant.COMMON_SAVE_SUCCESS);

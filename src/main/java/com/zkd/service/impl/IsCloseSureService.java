@@ -136,7 +136,7 @@ public class IsCloseSureService implements IIsCloseSureService {
                 }
                 //4.5.
                 processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now, StringUtils.parseString2Int(requestData.getCurrentStepId()), StringUtils.parseString2Int(requestData.getStepTableId()));
-
+                processDealUtils.updateTotalFlowData(totalFlowDao,nextStep,now);
                 //6.保存记录
                 processDealUtils.saveRecord(recordSubmitDao, nextStep, new Gson().toJson(requestData), "部门审核", now);
 

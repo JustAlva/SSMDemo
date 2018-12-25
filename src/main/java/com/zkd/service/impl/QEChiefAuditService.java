@@ -117,7 +117,7 @@ public class QEChiefAuditService implements IQEChiefAuditService {
                     StepDealUser qrqcDealUser = new StepDealUser(nextStep.getFlowID(), nextStep.getEndCode() + "", nextStep.getEndUser(), nextStep.getStartUser(), now);
                     stepDealUserDao.insertSelective(qrqcDealUser);
                 }
-
+                processDealUtils.updateTotalFlowData(totalFlowDao,nextStep,now);
                 //6.保存记录
                 processDealUtils.saveRecord(recordSubmitDao, nextStep, new Gson().toJson(requestData), "议长审核", now);
 

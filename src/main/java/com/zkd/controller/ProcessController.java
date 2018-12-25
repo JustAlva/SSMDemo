@@ -49,4 +49,35 @@ public class ProcessController {
     public String getFinishedProcess(@RequestParam("data") String data) {
         return processService.getFinishedProcess(data);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/search/all",method = RequestMethod.POST)
+    public String search( @RequestParam("data") String data)  {
+        try {
+            return processService.search(data);
+        } catch (Exception e) {
+            return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_ERROR, e.toString(), MsgConstant.MSG_ERROR));
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/search/deal",method = RequestMethod.POST)
+    public String searchDeal( @RequestParam("data") String data)  {
+        try {
+            return processService.searchDeal(data);
+        } catch (Exception e) {
+            return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_ERROR, e.toString(), MsgConstant.MSG_ERROR));
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/search/finished",method = RequestMethod.POST)
+    public String searchFinished( @RequestParam("data") String data)  {
+        try {
+            return processService.searchFinished(data);
+        } catch (Exception e) {
+            return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_ERROR, e.toString(), MsgConstant.MSG_ERROR));
+        }
+    }
+
 }
