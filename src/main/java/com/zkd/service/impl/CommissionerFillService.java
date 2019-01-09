@@ -1,6 +1,7 @@
 package com.zkd.service.impl;
 
 import com.google.gson.Gson;
+import com.zkd.common.bean.back.ReturnCommissionerFillShowDataBean;
 import com.zkd.common.bean.back.ReturnDataBean;
 import com.zkd.common.bean.other.SaveFileDataBean;
 import com.zkd.common.bean.other.StepJumpBean;
@@ -67,7 +68,6 @@ public class CommissionerFillService implements ICommissionerFillService {
         CommissionerFill commissionerFill = new CommissionerFill(
                 5,
                 requestBean.getUserCode(),
-                now,
                 newFlowId,
                 requestBean.getModel(),
                 requestBean.getProductLine(),
@@ -76,12 +76,12 @@ public class CommissionerFillService implements ICommissionerFillService {
                 MyDateUtils.getDate(requestBean.getOccurrenceDate()),
                 requestBean.getWorksheet(),
                 requestBean.getSupplier(),
-                MyDateUtils.getDate(requestBean.getReportDate()),
-                MyDateUtils.getDate(requestBean.getReceiveDate()),
+                MyDateUtils.getDate(requestBean.getReportDate(),MyDateUtils.FORMAT_TYPE_6),
+                MyDateUtils.getDate(requestBean.getReceiveDate(),MyDateUtils.FORMAT_TYPE_6),
                 requestBean.getReportDepartment() + "",
                 requestBean.getPersonal(),
                 requestBean.getSurePersonal(),
-                MyDateUtils.getDate(requestBean.getProductDate()),
+                MyDateUtils.getDate(requestBean.getProductDate(),MyDateUtils.FORMAT_TYPE_6),
                 requestBean.getProductedNum(),
                 requestBean.getUnhealthyNum(),
                 requestBean.getUnhealthyRate(),
@@ -101,15 +101,15 @@ public class CommissionerFillService implements ICommissionerFillService {
             nextStep.setEndStep( StepConstant.QRQC_CAUSE_ANALYSIS_PRELIMINARY_CODE, StepConstant.QRQC_CAUSE_ANALYSIS_PRELIMINARY_NAME, requestBean.getSelectPeOrQe());
 
             //2.在总表中插入一条新的纪录
-            TotalFlow totalFlow = new TotalFlow(1, nextStep.getFlowID(), nextStep.getStartUser(), now, nextStep.getStartUser(),nextStep.getStartName(), nextStep.getStartCode()+ "", now, nextStep.getStartUser());
+            TotalFlow totalFlow = new TotalFlow(1, nextStep.getFlowID(), nextStep.getStartUser() , nextStep.getStartUser(),nextStep.getStartName(), nextStep.getStartCode()+ "" , nextStep.getStartUser());
             totalFlowDao.insertSelective(totalFlow);
 
             //3.在当前处理表中插入qrqc专员填写完毕信息
-            CurrentDealStep currentDealStep = new CurrentDealStep((byte) 1,0, nextStep.getStartUser(), now, nextStep.getStartCode(),nextStep.getStartName(),newId, nextStep.getFlowID(), nextStep.getStartCode(), nextStep.getStartName(), nextStep.getStartUser(), newId, nextStep.getStartUser(), now);
+            CurrentDealStep currentDealStep = new CurrentDealStep((byte) 1,0, nextStep.getStartUser(),   now ,nextStep.getStartCode(),nextStep.getStartName(),newId, nextStep.getFlowID(), nextStep.getStartCode(), nextStep.getStartName(), nextStep.getStartUser(), newId, nextStep.getStartUser() , now);
             currentDealStepDao.insertBackId(currentDealStep);
 
             //4.下个节点新插一条数据 11初步原因分析
-            PreliminaryCauseAnalysis preliminaryCauseAnalysis = new PreliminaryCauseAnalysis(1, nextStep.getStartUser(), now, nextStep.getFlowID());
+            PreliminaryCauseAnalysis preliminaryCauseAnalysis = new PreliminaryCauseAnalysis(1, nextStep.getStartUser() , nextStep.getFlowID());
             preliminaryCauseAnalysisDao.insertBackId(preliminaryCauseAnalysis);
             nextStep.setEndTableId(preliminaryCauseAnalysis.getId());
 
@@ -162,8 +162,11 @@ public class CommissionerFillService implements ICommissionerFillService {
     @Override
     public String getDetail(String data) {
         RequestShowLoadBaseBean requestData = new EncryptUtils<RequestShowLoadBaseBean>().decryptObj(data, RequestShowLoadBaseBean.class);
-
+        ReturnCommissionerFillShowDataBean returnData = new ReturnCommissionerFillShowDataBean();
         CommissionerFill commissionerFill = commissionerFillDao.selectByPrimaryKey(requestData.getTableId());
-        return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, commissionerFill, MsgConstant.MSG_SUCCESS));
+        returnData.setCommissionerFill(commissionerFill);
+        List<String> imgs = uploadImagesDao.selectCommissionerImgs(commissionerFill.getFlowId(), requestData.getCurrentStepId());
+        returnData.setImgList(imgs);
+        return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, returnData, MsgConstant.MSG_SUCCESS));
     }
 }

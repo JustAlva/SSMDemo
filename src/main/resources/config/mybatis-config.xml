@@ -11,6 +11,7 @@
     </settings>
     <mappers>
         <mapper resource="com/zkd/dao/mapper/CommissionerFillMapper.xml" />
+        <mapper resource="com/zkd/dao/mapper/ConfAppVersionMapper.xml" />
         <mapper resource="com/zkd/dao/mapper/ConfDealStepMapper.xml" />
         <mapper resource="com/zkd/dao/mapper/ConfDepartmentMapper.xml"/>
         <mapper resource="com/zkd/dao/mapper/ConfExceptionTypeMapper.xml" />

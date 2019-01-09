@@ -1,10 +1,12 @@
 package com.zkd.common.bean.request.show;
 
 public class RequestShowLoadBaseBean {
-    int tableId;
+    private int tableId;
+    private int currentStepId;
 
-    public RequestShowLoadBaseBean(int tableId) {
+    public RequestShowLoadBaseBean(int tableId,int currentStepId) {
         this.tableId = tableId;
+        this.currentStepId = currentStepId;
     }
 
     public int getTableId() {
@@ -13,5 +15,13 @@ public class RequestShowLoadBaseBean {
 
     public void setTableId(int tableId) {
         this.tableId = tableId;
+    }
+
+    public int getCurrentStepId() {
+        return currentStepId;
+    }
+
+    public void setCurrentStepId(int currentStepId) {
+        this.currentStepId = currentStepId;
     }
 }

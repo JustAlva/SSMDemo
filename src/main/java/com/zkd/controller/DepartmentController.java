@@ -17,6 +17,10 @@ public class DepartmentController {
         return  departmentService.getAll(data);
     }
 
-
+    @ResponseBody
+    @RequestMapping(value="total",method = RequestMethod.POST)
+    public String getTotalDepartment() throws  Exception{
+        return  departmentService.getTotal();
+    }
 
 }

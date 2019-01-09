@@ -46,4 +46,12 @@ public class DepartmentService implements IDepartmentService {
         returnData.setStaffs(userList);
         return new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, returnData, MsgConstant.MSG_SUCCESS));
     }
+
+    @Override
+    public String getTotal() {
+        ReturnAllStaffDataBean returnData = new ReturnAllStaffDataBean();
+        List<ConfDepartment> departmentList = departmentDao.selectAll();
+        returnData.setDepartments(departmentList);
+        return  new EncryptUtils<>().encryptObj(new ReturnDataBean<>(MsgConstant.CODE_SUCCESS, returnData, MsgConstant.MSG_SUCCESS));
+    }
 }

@@ -82,8 +82,8 @@
       LAST_LOGIN_DATE, CREATE_USER, CREATE_DATE,
       UPDATE_DATE, USER_PSD)
     values (#{id,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{userNo,jdbcType=VARCHAR},
-      #{lastLoginDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
-      #{updateDate,jdbcType=TIMESTAMP}, #{userPsd,jdbcType=LONGVARCHAR})
+      #{lastLoginDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, SYSDATE(),
+      SYSDATE(), #{userPsd,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zkd.entity.User">
     <!--
@@ -135,10 +135,10 @@
         #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
+        SYSDATE(),
       </if>
       <if test="updateDate != null">
-        #{updateDate,jdbcType=TIMESTAMP},
+        SYSDATE(),
       </if>
       <if test="userPsd != null">
         #{userPsd,jdbcType=LONGVARCHAR},
@@ -166,10 +166,10 @@
         CREATE_USER = #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null">
-        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+        CREATE_DATE = SYSDATE(),
       </if>
       <if test="updateDate != null">
-        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+        UPDATE_DATE = SYSDATE(),
       </if>
       <if test="userPsd != null">
         USER_PSD = #{userPsd,jdbcType=LONGVARCHAR},
@@ -188,8 +188,8 @@
       USER_NO = #{userNo,jdbcType=VARCHAR},
       LAST_LOGIN_DATE = #{lastLoginDate,jdbcType=TIMESTAMP},
       CREATE_USER = #{createUser,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
-      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_DATE = SYSDATE(),
+      UPDATE_DATE = SYSDATE(),
       USER_PSD = #{userPsd,jdbcType=LONGVARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -204,8 +204,8 @@
       USER_NO = #{userNo,jdbcType=VARCHAR},
       LAST_LOGIN_DATE = #{lastLoginDate,jdbcType=TIMESTAMP},
       CREATE_USER = #{createUser,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
-      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+      CREATE_DATE = SYSDATE(),
+      UPDATE_DATE = SYSDATE()
     where ID = #{id,jdbcType=INTEGER}
   </update>
 

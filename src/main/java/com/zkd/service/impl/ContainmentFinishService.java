@@ -95,7 +95,7 @@ public class ContainmentFinishService implements IContainmentFinishService {
                     //processDealUtils.newCurrentStep(currentDealStepDao,stepDealUserDao,nextStep,now);
                     processDealUtils.newCurrentStep(currentDealStepDao, stepDealUserDao, nextStep, now,StringUtils.parseString2Int(requestData.getCurrentStepId()),StringUtils.parseString2Int(requestData.getStepTableId()));
                 }
-                processDealUtils.updateTotalFlowData(totalFlowDao,nextStep,now);
+                processDealUtils.updateTotalFlowData(totalFlowDao, nextStep, now);
                 //6.保存记录
                 processDealUtils.saveRecord(recordSubmitDao,nextStep,new Gson().toJson(requestData),"围堵措施-在制品/成品",now);
 
